@@ -1,5 +1,6 @@
-import { LibraryPage } from "@/components/library-page";
+import { LibraryPage } from "@/components/library/library-page";
 
-export default function Page({ params }: { params: { type: string } }) {
-  return <LibraryPage type={params.type} />;
+export default async function Page({ params }: { params: Promise<{ type: string }> }) {
+  const { type } = await params;
+  return <LibraryPage type={type} />;
 }

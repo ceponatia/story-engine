@@ -1,4 +1,4 @@
-import { NewCharacterForm } from "@/components/new-character-form";
+import { NewCharacterForm } from "@/components/library/new-character-form";
 
 export default function Page() {
   return (
