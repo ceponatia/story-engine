@@ -45,3 +45,4 @@ Using Tailwindcss, the color theme and buttons for the site will match a dark, r
 - Style card libraries with tag filtering and gradient image backgrounds.
 - Provide `.env.example` with Supabase configuration variables.
 - Create responsive library card container and card components for dating-app style layout.
+- Add peel animation to library cards on hover for sticker-like effect. (done)
