@@ -44,3 +44,5 @@ Using Tailwindcss, the color theme and buttons for the site will match a dark, r
 - Implement login and register modals as described in the navigation menu.
 - Style card libraries with tag filtering and gradient image backgrounds.
 - Provide `.env.example` with Supabase configuration variables.
+- Create responsive library card container and card components for dating-app style layout.
+- Organize library components into a subfolder to keep the root components directory clean.
