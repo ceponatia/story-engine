@@ -41,7 +41,7 @@ Using Tailwindcss, the color theme and buttons for the site will match a dark, r
 
 ## To-Do
 - [ ] Flesh out Supabase integration for library and character creation forms.
-- [ ] Link character cards to character form.
+- [x] Link character cards to character form.
 - [ ] Flesh out setting creation form fields.
 - [ ] Flesh out location creation form fields.
 - [ ] Style card libraries with tag filtering and gradient image backgrounds.
@@ -51,3 +51,5 @@ Using Tailwindcss, the color theme and buttons for the site will match a dark, r
 - [x] Create responsive library card container and card components for dating-app style layout.
 - [x] Add peel animation to library cards on hover for sticker-like effect. (done)
 - [x] Implement login and register modals as described in the navigation menu.
+- [x] Added character detail page with edit functionality linked from library cards.
+- [x] Replaced local avatar placeholder with remote image and removed unused asset.
