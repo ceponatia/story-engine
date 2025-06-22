@@ -38,3 +38,8 @@ Using Tailwindcss, the color theme and buttons for the site will match a dark, r
   - Scents & Fragrances (Same as appearance)
   - Personality (Same as appearance)
   - Background (Same as appearance)
+
+## To-Do
+- Flesh out Supabase integration for library and character creation forms.
+- Implement login and register modals as described in the navigation menu.
+- Style card libraries with tag filtering and gradient image backgrounds.
