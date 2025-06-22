@@ -6,7 +6,7 @@ interface Props {
 
 export function LibraryCard({ item }: Props) {
   return (
-    <Card className="flex flex-col aspect-[3/4] overflow-hidden">
+    <Card className="peel-card flex flex-col aspect-[3/4]">
       <CardHeader className="flex-none">
         <CardTitle className="truncate text-xl">{item.name}</CardTitle>
       </CardHeader>
