@@ -1,0 +1,45 @@
+runtime: "typescript"
+startCommand:
+  type: "http"
+  configSchema:
+    type: "object"
+    properties:
+      apiKey:
+        type: "string"
+        title: "Smithery API Key"
+        description: "Your Smithery API key"
+      supabaseUrl:
+        type: "string"
+        title: "Supabase URL"
+        description: "Your Supabase project URL"
+        default: ""
+      supabaseKey:
+        type: "string" 
+        title: "Supabase Anon Key"
+        description: "Your Supabase anonymous key"
+        default: ""
+      ollamaUrl:
+        type: "string"
+        title: "Ollama Base URL"
+        description: "Ollama server URL for AI features"
+        default: "http://localhost:11434"
+      ollamaModel:
+        type: "string"
+        title: "Ollama Model"
+        description: "AI model name"
+        default: "mistral:7b-instruct-v0.1-q4_0"
+      aiEnabled:
+        type: "boolean"
+        title: "AI Features"
+        description: "Enable/disable AI features"
+        default: false
+    required: ["apiKey"]
+  exampleConfig:
+    apiKey: "2f196f29-3b39-4965-b0ca-56d5040e39d1"
+    supabaseUrl: "https://your-project.supabase.co"
+    supabaseKey: "your-anon-key"
+    ollamaUrl: "http://localhost:11434"
+    ollamaModel: "mistral:7b-instruct-v0.1-q4_0"
+    aiEnabled: false
+env:
+  NODE_ENV: "production"
