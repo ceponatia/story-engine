@@ -1,4 +1,4 @@
-import { CharacterPage } from "@/components/characters/character-page";
+import { LocationPage } from "@/components/locations/location-page";
 
 export default async function Page({
   params,
@@ -6,5 +6,5 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return <CharacterPage id={id} />;
+  return <LocationPage id={id} />;
 }

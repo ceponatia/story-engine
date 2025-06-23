@@ -46,6 +46,48 @@ Using Tailwindcss, the color theme and buttons for the site will match a dark, r
 - [ ] Flesh out location creation form fields.
 - [ ] Style card libraries with tag filtering and gradient image backgrounds.
 
+## Ollama Integration
+
+### Hardware Requirements
+- **Target Hardware**: NVIDIA RTX 4060 with 8GB VRAM
+- **Model**: Mistral 7B with function calling capabilities
+- **CUDA Support**: Required for optimal performance
+
+### Installation Plan
+1. **Ollama Installation**: Install CUDA-enabled Ollama instance
+   - Location: System-wide installation or Docker container
+   - GPU acceleration enabled with NVIDIA drivers
+   - Model storage: `~/.ollama/models/` or custom path
+
+2. **Model Download**: Pull Mistral 7B model optimized for function calling
+   - Command: `ollama pull mistral:7b-instruct-v0.1-q4_0`
+   - Quantization: 4-bit for 8GB VRAM compatibility
+   - Storage location: Ollama's model directory
+
+3. **Integration Architecture**:
+   - **API Client**: `lib/ai/ollama/client.ts`
+   - **Function Definitions**: `lib/ai/functions/`
+   - **Model Configurations**: `lib/ai/config/`
+   - **Type Definitions**: `lib/ai/types/`
+
+### Folder Structure
+```
+lib/ai/
+├── ollama/          # Ollama client and connection logic
+├── models/          # Model-specific configurations
+├── functions/       # Function calling definitions
+├── config/          # AI integration configurations
+└── types/           # TypeScript type definitions
+
+docs/ai/             # AI integration documentation
+```
+
+### RAG Integration Plan
+- **Prompt Injection Experiments**: Using Mistral's function calling for RAG-style interactions
+- **Character Context**: Inject character data into conversations
+- **Setting Context**: Inject location/setting data into story generation
+- **Dynamic Functions**: Create story-specific function definitions
+
 ## Done
 - [x] Provide `.env.example` with Supabase configuration variables.
 - [x] Create responsive library card container and card components for dating-app style layout.
@@ -53,3 +95,4 @@ Using Tailwindcss, the color theme and buttons for the site will match a dark, r
 - [x] Implement login and register modals as described in the navigation menu.
 - [x] Added character detail page with edit functionality linked from library cards.
 - [x] Replaced local avatar placeholder with remote image and removed unused asset.
+- [x] Created folder structure for Ollama integration

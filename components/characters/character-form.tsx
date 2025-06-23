@@ -7,31 +7,42 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import type { User } from "@supabase/supabase-js";
 
 interface Character {
-  id: number;
+  id: string;
   name: string;
   age: number | null;
   gender: string | null;
   tags: string | null;
   appearance: string | null;
-  fragrances: string | null;
+  scents_aromas: string | null;
   personality: string | null;
   background: string | null;
+  created_by: string;
+  visibility: string;
 }
 
-export function CharacterForm({ character }: { character: Character }) {
+export function CharacterForm({ 
+  character, 
+  currentUser 
+}: { 
+  character: Character;
+  currentUser: User | null;
+}) {
   const [edit, setEdit] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const canEdit = currentUser?.id === character.created_by;
   const [formData, setFormData] = useState({
     name: character.name ?? "",
     age: character.age ?? "",
     gender: character.gender ?? "Male",
     tags: character.tags ?? "",
     appearance: character.appearance ?? "",
-    fragrances: character.fragrances ?? "",
+    scents_aromas: character.scents_aromas ?? "",
     personality: character.personality ?? "",
     background: character.background ?? "",
+    visibility: character.visibility ?? "private",
   });
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
@@ -46,9 +57,10 @@ export function CharacterForm({ character }: { character: Character }) {
       gender: character.gender ?? "Male",
       tags: character.tags ?? "",
       appearance: character.appearance ?? "",
-      fragrances: character.fragrances ?? "",
+      scents_aromas: character.scents_aromas ?? "",
       personality: character.personality ?? "",
       background: character.background ?? "",
+      visibility: character.visibility ?? "private",
     });
     setAvatarUrl(null);
     setEdit(false);
@@ -58,7 +70,7 @@ export function CharacterForm({ character }: { character: Character }) {
     e.preventDefault();
     setIsSaving(true);
     const supabase = createClient();
-    await supabase
+    const { data, error } = await supabase
       .from("characters")
       .update({
         name: formData.name,
@@ -66,13 +78,22 @@ export function CharacterForm({ character }: { character: Character }) {
         gender: formData.gender,
         tags: formData.tags,
         appearance: formData.appearance,
-        fragrances: formData.fragrances,
+        scents_aromas: formData.scents_aromas,
         personality: formData.personality,
         background: formData.background,
+        visibility: formData.visibility,
       })
       .eq("id", character.id);
+    
+    if (error) {
+      console.error("Error updating character:", error);
+      alert("Failed to update character: " + error.message);
+    } else {
+      setEdit(false);
+      // Optionally refresh the page to show updated data
+      window.location.reload();
+    }
     setIsSaving(false);
-    setEdit(false);
   };
 
   return (
@@ -156,11 +177,11 @@ export function CharacterForm({ character }: { character: Character }) {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="fragrances">Scents &amp; Fragrances</Label>
+        <Label htmlFor="scents_aromas">Scents &amp; Fragrances</Label>
         <Textarea
-          id="fragrances"
-          value={formData.fragrances}
-          onChange={(e) => handleChange("fragrances", e.target.value)}
+          id="scents_aromas"
+          value={formData.scents_aromas}
+          onChange={(e) => handleChange("scents_aromas", e.target.value)}
           readOnly={!edit}
         />
       </div>
@@ -182,20 +203,52 @@ export function CharacterForm({ character }: { character: Character }) {
           readOnly={!edit}
         />
       </div>
-      {edit ? (
-        <div className="flex gap-2">
-          <Button type="submit" className="flex-1" disabled={isSaving}>
-            {isSaving ? "Updating..." : "Update"}
-          </Button>
-          <Button type="button" variant="secondary" onClick={handleCancel}>
-            Cancel
-          </Button>
+      
+      {canEdit && (
+        <div className="grid gap-2">
+          <Label htmlFor="visibility">Visibility</Label>
+          <select
+            id="visibility"
+            className="rounded-md border border-input bg-background px-3 py-2 text-sm"
+            value={formData.visibility ?? "private"}
+            onChange={(e) => handleChange("visibility", e.target.value)}
+            disabled={!edit}
+          >
+            <option value="private">Private</option>
+            <option value="public">Public</option>
+            <option value="shared">Shared</option>
+          </select>
         </div>
-      ) : (
-        <Button type="button" className="w-full" onClick={() => setEdit(true)}>
-          Edit
-        </Button>
       )}
+
+      {canEdit ? (
+        edit ? (
+          <div className="flex gap-2">
+            <Button type="submit" className="flex-1" disabled={isSaving}>
+              {isSaving ? "Updating..." : "Update"}
+            </Button>
+            <Button type="button" variant="secondary" onClick={handleCancel}>
+              Cancel
+            </Button>
+          </div>
+        ) : (
+          <Button type="button" className="w-full" onClick={() => setEdit(true)}>
+            Edit
+          </Button>
+        )
+      ) : (
+        <div className="text-sm text-muted-foreground text-center">
+          You can only edit characters you created.
+        </div>
+      )}
+      
+      <div className="text-xs text-muted-foreground text-center space-y-1">
+        {character.visibility !== "public" && (
+          <div className="text-amber-600">
+            🔒 {character.visibility === "private" ? "Private" : "Shared"}
+          </div>
+        )}
+      </div>
     </form>
   );
 }

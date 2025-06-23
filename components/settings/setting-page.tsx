@@ -1,24 +1,34 @@
 import { createClient } from "@/lib/supabase/server";
-import { CharacterForm } from "./character-form";
+import { SettingForm } from "./setting-form";
 import { LibraryBreadcrumbs } from "@/components/navigation/library-breadcrumbs";
 
-export async function CharacterPage({ id }: { id: string }) {
+export async function SettingPage({ id }: { id: string }) {
   const supabase = await createClient();
   
   // Get current user
   const { data: { user } } = await supabase.auth.getUser();
   
   const { data } = await supabase
-    .from("characters")
-    .select()
+    .from("settings")
+    .select(`
+      *,
+      setting_locations (
+        location_id,
+        locations (
+          id,
+          name,
+          description
+        )
+      )
+    `)
     .eq("id", id)
     .single();
 
   if (!data) {
     return (
       <div className="container mx-auto px-4 py-6">
-        <LibraryBreadcrumbs type="characters" />
-        <p className="p-4 text-center">Character not found.</p>
+        <LibraryBreadcrumbs type="settings" />
+        <p className="p-4 text-center">Setting not found.</p>
       </div>
     );
   }
@@ -26,11 +36,11 @@ export async function CharacterPage({ id }: { id: string }) {
   return (
     <div className="container mx-auto px-4 py-6">
       <LibraryBreadcrumbs 
-        type="characters" 
+        type="settings" 
         itemName={data.name} 
         itemId={id} 
       />
-      <CharacterForm character={data} currentUser={user} />
+      <SettingForm setting={data} currentUser={user} />
     </div>
   );
 }
