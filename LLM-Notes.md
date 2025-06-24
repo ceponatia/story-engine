@@ -85,43 +85,116 @@ create table adventure_messages (
 - **Avatar**: Character and AI avatars
 - **Skeleton**: Typing indicators
 
-## Outstanding Architecture Questions
+## Architecture Decisions (Resolved)
 
-### 1. **Adventure Instance Data Structure**
-- Should we create separate tables like `adventure_characters`, `adventure_locations`, `adventure_settings` that are copies linked to specific adventures?
-- Or should we store the copied data as JSONB within the `adventures` table itself?
-- How do we handle relationships between copied entities (e.g., if a character references a location that's also copied)?
+### 1. **Adventure Instance Data Structure** ✅
+**Decision**: Use separate tables for adventure instances
+- Create `adventure_characters`, `adventure_locations`, and `adventure_settings` tables
+- Each table copies all fields from originals plus adds `state_updates` JSONB field for RAG
+- Adventures table links to these copied entities and chat history
 
-### 2. **RAG System Architecture**
-- Should the RAG system store character/location/setting updates as separate JSONB documents in a dedicated `adventure_context` table?
-- Do we want versioned updates (tracking changes over time) or just current state?
-- How should we structure the JSONB for efficient LLM context injection? (e.g., flat key-value pairs vs nested objects)
+**Schema Example**:
+```sql
+create table adventure_characters (
+  id uuid default gen_random_uuid() primary key,
+  adventure_id uuid references adventures(id) on delete cascade,
+  original_character_id uuid references characters(id),
+  -- All character fields copied here
+  state_updates jsonb default '{}', -- RAG updates
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+```
 
-### 3. **Copy Timing & Scope**
-- When exactly do we create the copies? (At adventure creation, or lazy-load when first referenced?)
-- If an adventure references multiple characters/locations, do we copy ALL of them at adventure start?
-- What happens if a character references items/equipment - do those get copied too?
+### 2. **RAG System Architecture** ✅
+**Decision**: Store updates in instance objects with structured JSONB
+- Updates stored in `state_updates` field of instance tables
+- Use diff-based updates with timestamps
+- Track when changes occurred for recency
 
-### 4. **LLM Character Agency**
-- Since "The LLM will primarily act as the character," does this mean:
-  - The user inputs intentions/actions, and the LLM responds AS the character?
-  - Or the user plays the character and the LLM acts as the world/NPCs?
-  - Should we distinguish between character thoughts/actions vs world responses?
+**JSONB Structure**:
+```json
+{
+  "fragrances": {
+    "feet": ["smelly", "vinegar", "cheesy"],
+    "hair": ["floral", "jasmine"]
+  },
+  "state": {
+    "position": "sitting on wooden chair",
+    "location": "tavern_main_room",
+    "clothing": {
+      "shirt": "blue tunic",
+      "changes_from_original": true
+    }
+  },
+  "relationships": {
+    "met_characters": ["npc_bartender_id"],
+    "reputation": {"tavern": "friendly"}
+  }
+}
+```
 
-### 5. **Context Injection Strategy**
-- For the "last 10 messages" + RAG context, should we:
-  - Inject character state at every LLM call?
-  - Only inject updated/changed attributes?
-  - Maintain a running summary of key changes?
+### 3. **Copy Timing & Scope** ✅
+**Decision**: Copy all entities at adventure start
+- Copies created when adventure is first started
+- All referenced entities copied in one transaction
+- Items/equipment to be added in future (potential separate table)
 
-### 6. **Change Detection & Updates**
-- How should we detect when the LLM has made changes that need to be saved to the RAG system?
-- Should we use function calling to explicitly handle character/location updates?
-- Or parse the LLM response for changes using structured output?
+### 4. **LLM Character Agency** ✅
+**Decision**: LLM responds AS the character
+- User inputs intentions/actions
+- LLM responds in character voice and can take autonomous actions
+- User only plays themselves, never NPCs
+- Distinguish character thoughts/actions from world responses (implementation TBD)
 
-### 7. **Data Consistency**
-- If the LLM makes contradictory updates (e.g., "character puts on blue shirt" then "character is wearing red shirt"), how do we handle conflicts?
-- Should we validate LLM-proposed changes against character constraints?
+### 5. **Context Injection Strategy** ✅
+**Decision**: Three-tier context injection with lorebook
+```typescript
+interface LLMContext {
+  // Tier 1: Current state (always included)
+  character: {
+    name: string,
+    current_position: string, // Granular: "sitting on bed"
+    current_location: string,
+    recent_actions: string[]
+  },
+  
+  // Tier 2: Relevant details (context-based)
+  relevant_attributes: {}, // Dynamically selected
+  
+  // Tier 3: Lorebook (accumulated knowledge)
+  lorebook: {
+    discovered_locations: string[],
+    learned_information: Record<string, string>
+  }
+}
+```
+
+### 6. **Change Detection & Updates** ✅
+**Decision**: Hybrid approach with function calling + NLP parsing
+- Every LLM response calls basic state functions
+- Natural language parsing for additional fields (scent, taste, etc.)
+- Use Mistral's function calling for structured updates
+
+**Event Sourcing with Validation**:
+```sql
+create table adventure_state_events (
+  id uuid primary key,
+  adventure_character_id uuid references adventure_characters(id),
+  event_type text,
+  event_data jsonb,
+  validated boolean default false,
+  created_at timestamptz default now()
+);
+```
+
+### 7. **Data Consistency** ✅
+**Decision**: Event sourcing with validation rules
+- No teleportation or unrealistic changes
+- State must be logical and consistent
+- Adventures are hermetic (isolated containers)
+- No undo/rollback functionality
+- NPCs not tracked initially (future feature)
 
 ## Chat Flow Design
 
@@ -146,12 +219,51 @@ function AdventureChat({ adventureId }) {
 - Chat history portion shows user and LLM messages
 - Send button and Enter key both trigger message sending
 
-## Next Steps
-1. Resolve outstanding architecture questions
-2. Finalize database schema for copy system and RAG storage
-3. Design LLM context injection strategy
-4. Plan character state update detection mechanism
-5. Create comprehensive LLM-PLAN.md document
+## Implementation Plan - Basic Chat Functionality
+
+### Phase 1: Core Infrastructure (Start Here)
+1. **Database Setup**
+   - Create `adventures` table
+   - Create `adventure_messages` table
+   - Create basic `adventure_characters` table (simplified copy)
+   - Add RLS policies for user data isolation
+
+2. **Basic Adventure Creation Flow**
+   - New page: `/adventures/new`
+   - Form to select character and optionally location/setting
+   - On submit: Copy character data to `adventure_characters`
+   - Redirect to chat interface
+
+3. **Chat Interface MVP**
+   - New page: `/adventures/[id]/chat`
+   - Basic message display (ScrollArea + Cards)
+   - Input field with Enter key handling
+   - Send button with loading state
+   - Simple LLM integration (no RAG yet)
+
+### Phase 2: LLM Integration
+1. **Basic Ollama Connection**
+   - Server action for sending messages
+   - Simple prompt template: "You are {character.name}. {character.personality}"
+   - Stream response back to UI
+   - Save messages to database
+
+2. **Message History**
+   - Load last 10 messages on page load
+   - Include in LLM context
+   - Auto-scroll to bottom
+
+### Phase 3: State Tracking (Later)
+1. Add `state_updates` JSONB field
+2. Implement function calling
+3. Add validation rules
+4. Create lorebook system
+
+### Immediate Next Steps
+1. Create database migrations
+2. Build adventure creation page
+3. Implement basic chat UI
+4. Test Ollama integration
 
 ## References
 - **CLAUDE.md**: Contains development commands, architecture overview, and AI integration details

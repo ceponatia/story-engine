@@ -1,0 +1,168 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { sendMessage } from "@/app/actions/adventures";
+import { generateLLMResponse } from "@/app/actions/llm";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+
+interface Message {
+  id: string;
+  adventure_id: string;
+  role: "user" | "assistant" | "system";
+  content: string;
+  metadata?: Record<string, unknown>;
+  created_at: string;
+  user_id: string;
+}
+
+interface Adventure {
+  id: string;
+  title: string;
+  adventure_characters: Array<{ name: string }>;
+}
+
+interface AdventureChatProps {
+  adventure: Adventure;
+  initialMessages: Message[];
+  userId: string;
+}
+
+export function AdventureChat({ adventure, initialMessages }: AdventureChatProps) {
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      const scrollContainer = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
+      if (scrollContainer) {
+        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+      }
+    }
+  }, [messages]);
+
+  const handleSendMessage = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMessage = input.trim();
+    setInput("");
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Create FormData for server action
+      const formData = new FormData();
+      formData.append('adventureId', adventure.id);
+      formData.append('content', userMessage);
+
+      // Send user message
+      const userResult = await sendMessage(formData);
+      if (userResult.success && userResult.message) {
+        setMessages(prev => [...prev, userResult.message]);
+      }
+
+      // Generate LLM response
+      const llmResult = await generateLLMResponse(adventure.id, userMessage);
+      if (llmResult.success && llmResult.message) {
+        setMessages(prev => [...prev, llmResult.message]);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setError(error instanceof Error ? error.message : "Failed to send message. Please try again.");
+    } finally {
+      setIsLoading(false);
+      // Keep focus on input
+      inputRef.current?.focus();
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-full p-4">
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold">{adventure.title}</h1>
+        <p className="text-sm text-muted-foreground">
+          Playing as {adventure.adventure_characters[0]?.name}
+        </p>
+      </div>
+
+      <Card className="flex-1 flex flex-col">
+        <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+          <div className="space-y-4">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
+                <Card
+                  className={`max-w-[80%] ${
+                    message.role === "user"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted"
+                  }`}
+                >
+                  <CardContent className="p-3">
+                    <p className="text-sm">{message.content}</p>
+                    <p className="text-xs opacity-70 mt-1">
+                      {new Date(message.created_at).toLocaleTimeString()}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <Card className="bg-muted">
+                  <CardContent className="p-3">
+                    <p className="text-sm">Thinking...</p>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </div>
+        </ScrollArea>
+
+        <div className="p-4 border-t">
+          {error && (
+            <Alert className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          <div className="flex gap-2">
+            <Input
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Type your action or dialogue..."
+              disabled={isLoading}
+              className="flex-1"
+            />
+            <Button 
+              onClick={handleSendMessage} 
+              disabled={isLoading || !input.trim()}
+            >
+              Send
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}
