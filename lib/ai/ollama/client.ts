@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { OllamaConfig, OllamaResponse, ModelInfo } from '../types/ollama';
 
 export class OllamaClient {

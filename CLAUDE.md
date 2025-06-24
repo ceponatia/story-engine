@@ -76,3 +76,43 @@ This is a Next.js 15 application with Supabase integration for a story/character
 - Path aliases configured: `@/*` maps to project root
 - ESLint configuration extends Next.js defaults
 - No test framework currently configured
+
+## Adventure Chat Implementation Plan
+
+### Phase 1: Core Infrastructure (Current Focus)
+1. **Database Setup**
+   - Create `adventures` table
+   - Create `adventure_messages` table
+   - Create basic `adventure_characters` table (simplified copy)
+   - Add RLS policies for user data isolation
+
+2. **Basic Adventure Creation Flow**
+   - New page: `/adventures/new`
+   - Form to select character and optionally location/setting
+   - On submit: Copy character data to `adventure_characters`
+   - Redirect to chat interface
+
+3. **Chat Interface MVP**
+   - New page: `/adventures/[id]/chat`
+   - Basic message display (ScrollArea + Cards)
+   - Input field with Enter key handling
+   - Send button with loading state
+   - Simple LLM integration (no RAG yet)
+
+### Phase 2: LLM Integration
+1. **Basic Ollama Connection**
+   - Server action for sending messages
+   - Simple prompt template: "You are {character.name}. {character.personality}"
+   - Stream response back to UI
+   - Save messages to database
+
+2. **Message History**
+   - Load last 10 messages on page load
+   - Include in LLM context
+   - Auto-scroll to bottom
+
+### Phase 3: State Tracking (Future)
+1. Add `state_updates` JSONB field
+2. Implement function calling
+3. Add validation rules
+4. Create lorebook system

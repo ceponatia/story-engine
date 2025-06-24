@@ -70,7 +70,7 @@ export function CharacterForm({
     e.preventDefault();
     setIsSaving(true);
     const supabase = createClient();
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("characters")
       .update({
         name: formData.name,

@@ -52,7 +52,7 @@ export function LocationForm({
     e.preventDefault();
     setIsSaving(true);
     const supabase = createClient();
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("locations")
       .update({
         name: formData.name,

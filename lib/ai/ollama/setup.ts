@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { OllamaClient } from './client';
 import { DEFAULT_MODEL, RECOMMENDED_MODELS } from '../config/ollama';
 

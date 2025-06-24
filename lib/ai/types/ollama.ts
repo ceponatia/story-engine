@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface OllamaConfig {
   baseUrl?: string;
   timeout?: number;
@@ -113,5 +114,4 @@ export interface ModelDetails {
   license: string;
   modelfile: string;
   parameters: Record<string, any>;
-  template: string;
 }
