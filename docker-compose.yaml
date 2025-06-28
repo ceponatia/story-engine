@@ -1,0 +1,25 @@
+services:
+  db:
+    image: ankane/pgvector:latest
+    container_name: storyengine_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: claude
+      POSTGRES_PASSWORD: yurikml2
+      POSTGRES_DB: storyengine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/02-schema.sql
+      # - ./database/create-admin-user.sql:/docker-entrypoint-initdb.d/03-admin-user.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U claude -d storyengine"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local

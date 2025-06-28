@@ -8,35 +8,16 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
-interface Character {
-  id: string;
-  name: string;
-  age: number | null;
-  gender: string | null;
-  tags: string | null;
-  appearance: string | null;
-  scents_aromas: string | null;
-  personality: string | null;
-  background: string | null;
-  created_by: string;
-  visibility: string;
-}
-
-interface Location {
-  id: string;
-  name: string;
-  description: string | null;
-  created_by: string;
-}
+import { Character, Location, Setting } from "@/lib/database/types";
 
 interface NewAdventureFormProps {
   characters: Character[];
   locations: Location[];
+  settings: Setting[];
   userId: string;
 }
 
-export function NewAdventureForm({ characters, locations }: NewAdventureFormProps) {
+export function NewAdventureForm({ characters, locations, settings }: NewAdventureFormProps) {
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -74,10 +55,33 @@ export function NewAdventureForm({ characters, locations }: NewAdventureFormProp
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="characterId">Select Character</Label>
+            <Label htmlFor="name">Your Name</Label>
+            <Input
+              id="name"
+              name="name"
+              placeholder="Enter your name (how the character will refer to you)"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="adventureType">Adventure Type</Label>
+            <Select name="adventureType" required>
+              <SelectTrigger id="adventureType">
+                <SelectValue placeholder="Choose the type of adventure" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="romance">Romance</SelectItem>
+                <SelectItem value="action">Action</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="characterId">AI Character</Label>
             <Select name="characterId" required>
               <SelectTrigger id="characterId">
-                <SelectValue placeholder="Choose a character to play as" />
+                <SelectValue placeholder="Choose the character the AI will play" />
               </SelectTrigger>
               <SelectContent>
                 {characters.map((character) => (
@@ -108,14 +112,37 @@ export function NewAdventureForm({ characters, locations }: NewAdventureFormProp
             </div>
           )}
 
+          {settings.length > 0 && (
+            <div className="space-y-2">
+              <Label htmlFor="settingId">Setting (Optional)</Label>
+              <Select name="settingId">
+                <SelectTrigger id="settingId">
+                  <SelectValue placeholder="Choose a setting for your adventure" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  {settings.map((setting) => (
+                    <SelectItem key={setting.id} value={setting.id}>
+                      {setting.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
           <div className="space-y-2">
-            <Label htmlFor="settingDescription">Setting Description (Optional)</Label>
+            <Label htmlFor="initialMessage">Initial Message</Label>
             <Textarea
-              id="settingDescription"
-              name="settingDescription"
-              placeholder="Describe the setting or scenario for your adventure..."
-              rows={4}
+              id="initialMessage"
+              name="initialMessage"
+              placeholder="Enter the character's opening message to start the adventure..."
+              rows={3}
+              required
             />
+            <p className="text-sm text-muted-foreground">
+              This message will appear as the character's first response when the adventure begins.
+            </p>
           </div>
 
           {error && (

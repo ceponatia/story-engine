@@ -1,14 +1,5 @@
-import { NewCharacterForm } from "@/components/library/new-character-form";
-import { LibraryBreadcrumbs } from "@/components/navigation/library-breadcrumbs";
+import { UnifiedCharacterPage } from "@/components/characters/unified-character-page";
 
 export default function Page() {
-  return (
-    <div className="container mx-auto px-4 py-6">
-      <LibraryBreadcrumbs type="characters" />
-      <div className="max-w-2xl mx-auto">
-        <h1 className="my-4 text-2xl font-bold">Create New Character</h1>
-        <NewCharacterForm />
-      </div>
-    </div>
-  );
+  return <UnifiedCharacterPage id="new" initialMode="create" />;
 }

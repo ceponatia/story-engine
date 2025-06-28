@@ -1,4 +1,4 @@
-import { SettingPage } from "@/components/settings/setting-page";
+import { UnifiedSettingPage } from "@/components/settings/unified-setting-page";
 
 export default async function Page({
   params,
@@ -6,5 +6,5 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return <SettingPage id={id} />;
+  return <UnifiedSettingPage id={id} />;
 }

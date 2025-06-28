@@ -10,8 +10,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "StoryEngine - AI-Powered Interactive Storytelling",
+  description: "Create, manage, and experience interactive stories with AI-powered characters and immersive worlds",
 };
 
 const geistSans = Geist({
@@ -34,9 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen flex flex-col">
+          <div className="h-screen">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="pt-14 h-screen overflow-auto">{children}</main>
           </div>
         </ThemeProvider>
       </body>
