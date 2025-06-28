@@ -24,11 +24,11 @@ import {
 
 interface Props {
   item: { 
-    id: number; 
+    id: string; 
     name?: string; 
     title?: string; 
     description?: string;
-    age?: string;
+    age?: number;
     gender?: string;
     tags?: string[];
     created_at?: string;

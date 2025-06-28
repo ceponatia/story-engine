@@ -1,4 +1,3 @@
-import { createClient } from "@/lib/supabase/server";
 import { LibraryCard } from "./library-card";
 import { LibraryContainer } from "./library-container";
 import { LibrarySearch } from "./library-search";
@@ -6,6 +5,10 @@ import { LibraryBreadcrumbs } from "@/components/navigation/library-breadcrumbs"
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus, FileX } from "lucide-react";
+import { getCharactersAction } from "@/lib/actions/character-actions";
+import { getLocationsAction } from "@/lib/actions/location-actions";
+import { getSettingsAction } from "@/lib/actions/setting-actions";
+import { Character, Location, Setting } from "@/lib/database/types";
 
 const typeDisplayNames: Record<string, string> = {
   characters: "Characters",
@@ -20,35 +23,27 @@ const typeDescriptions: Record<string, string> = {
 };
 
 export async function LibraryPage({ type }: { type: string }) {
-  const supabase = await createClient();
+  let data: (Character | Location | Setting)[] = [];
   
-  // Get current user
-  const { data: { user } } = await supabase.auth.getUser();
-  
-  // Build privacy-aware query based on entity type
-  let query = supabase.from(type).select();
-  
-  if (user) {
-    // Show items that are either:
-    // 1. Owned by current user (regardless of privacy)
-    // 2. Public items from other users
-    if (type === 'characters') {
-      query = query.or(`created_by.eq.${user.id},visibility.eq.public`);
-    } else if (type === 'settings') {
-      query = query.or(`created_by.eq.${user.id},is_private.eq.false`);
-    } else if (type === 'locations') {
-      query = query.or(`created_by.eq.${user.id},is_private.eq.false`);
+  try {
+    switch (type) {
+      case 'characters':
+        data = await getCharactersAction();
+        break;
+      case 'locations':
+        data = await getLocationsAction();
+        break;
+      case 'settings':
+        data = await getSettingsAction();
+        break;
+      default:
+        console.warn(`Unknown library type: ${type}`);
     }
-  } else {
-    // Not logged in - only show public items
-    if (type === 'characters') {
-      query = query.eq('visibility', 'public');
-    } else if (type === 'settings' || type === 'locations') {
-      query = query.eq('is_private', false);
-    }
+  } catch (error) {
+    console.error(`Error fetching ${type}:`, error);
+    // If user is not authenticated, the actions will throw an error
+    // In this case, we'll just show the empty state
   }
-  
-  const { data } = await query;
   
   const displayName = typeDisplayNames[type] || type;
   const description = typeDescriptions[type];

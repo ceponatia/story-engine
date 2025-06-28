@@ -5,6 +5,7 @@ export interface AIConfig {
   ollamaModel: string;
   aiEnabled: boolean;
   timeout: number;
+  useOptimizedTemplates: boolean;
 }
 
 export function validateAIConfig(): AIConfig {
@@ -21,6 +22,7 @@ export function validateAIConfig(): AIConfig {
     ollamaModel: process.env.OLLAMA_MODEL || 'mistral:instruct',
     aiEnabled,
     timeout: 30000,
+    useOptimizedTemplates: process.env.USE_OPTIMIZED_TEMPLATES === 'true',
   };
 
   // Validate Ollama configuration if AI is enabled
@@ -55,6 +57,7 @@ export function getAIConfig(): AIConfig {
       ollamaModel: 'mistral:instruct',
       aiEnabled: false,
       timeout: 30000,
+      useOptimizedTemplates: false,
     };
   }
 }

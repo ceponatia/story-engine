@@ -20,7 +20,7 @@ const customJestConfig = {
     '!**/*.d.ts',
   ],
   transformIgnorePatterns: [
-    'node_modules/(?!(@supabase|@testing-library|uuid)/)',
+    'node_modules/(?!(@testing-library|uuid)/)',
   ],
 }
 

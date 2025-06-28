@@ -42,14 +42,6 @@ export function LibraryBreadcrumbs({ type, itemName, itemId }: LibraryBreadcrumb
           </BreadcrumbLink>
         </BreadcrumbItem>
         
-        <BreadcrumbSeparator />
-        
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="/library">Library</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        
         {type && (
           <>
             <BreadcrumbSeparator />

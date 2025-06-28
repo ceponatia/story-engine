@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { createClient } from "@/lib/supabase/server";
+// TODO: Replace with PostgreSQL authentication check
 import Link from "next/link";
 import { 
   BookOpen, 
@@ -11,14 +11,12 @@ import {
   Zap, 
   Shield, 
   ArrowRight,
-  Play,
-  FileText
+  Play
 } from "lucide-react";
 
 export default async function Home() {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getSession();
-  const loggedIn = !!data.session;
+  // TODO: Replace with actual authentication check
+  const loggedIn = false;
 
   const features = [
     {
@@ -91,7 +89,7 @@ export default async function Home() {
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild className="min-w-[160px]">
-                  <Link href="/protected" className="flex items-center gap-2">
+                  <Link href="/adventures/new" className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4" />
                     Start Adventure
                   </Link>
@@ -100,13 +98,10 @@ export default async function Home() {
             ) : (
               <>
                 <Button size="lg" asChild className="min-w-[160px]">
-                  <Link href="/auth/sign-up" className="flex items-center gap-2">
+                  <Link href="/library/characters" className="flex items-center gap-2">
                     Get Started
                     <ArrowRight className="w-4 h-4" />
                   </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild className="min-w-[160px]">
-                  <Link href="/auth/login">Login</Link>
                 </Button>
               </>
             )}
@@ -155,22 +150,12 @@ export default async function Home() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {!loggedIn && (
-              <>
-                <Button size="lg" asChild>
-                  <Link href="/auth/sign-up" className="flex items-center gap-2">
-                    Start Free Today
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/docs" className="flex items-center gap-2">
-                    <FileText className="w-4 h-4" />
-                    Learn More
-                  </Link>
-                </Button>
-              </>
-            )}
+            <Button size="lg" asChild>
+              <Link href="/library/characters" className="flex items-center gap-2">
+                Start Free Today
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
             {loggedIn && (
               <Button size="lg" asChild>
                 <Link href="/library/characters" className="flex items-center gap-2">
