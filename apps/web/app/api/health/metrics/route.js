@@ -1,33 +1,35 @@
 import { NextResponse } from "next/server";
-import { databaseMetrics } from "@story-engine/postgres/metrics";
+import { checkAllDatabaseHealth, getOverallHealthStatus } from "@/lib/database";
 export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url);
         const detail = searchParams.get("detail") || "summary";
-        const repository = searchParams.get("repository");
-        const metrics = databaseMetrics.getAllMetrics();
-        const { checkAllDatabaseHealth, getOverallHealthStatus } = await import("@/lib/database");
         const healthStatus = await checkAllDatabaseHealth();
         const overallHealth = await getOverallHealthStatus();
         const response = {
             timestamp: new Date().toISOString(),
-            metrics: {
-                overall: metrics.overall,
-                databases: {
-                    postgres: metrics.postgres,
-                    redis: metrics.redis,
-                    qdrant: metrics.qdrant,
-                    mongodb: metrics.mongodb,
-                },
-                health: {
-                    databases: healthStatus,
-                    overall: overallHealth,
-                },
+            health: {
+                databases: healthStatus,
+                overall: overallHealth,
             },
+            uptime: process.uptime() * 1000,
         };
         if (detail === "full") {
-            if (repository) {
-            }
+            const detailedResponse = Object.assign(Object.assign({}, response), { environment: {
+                    nodeVersion: process.version,
+                    platform: process.platform,
+                    memoryUsage: process.memoryUsage(),
+                } });
+            return NextResponse.json(detailedResponse, {
+                status: 200,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET",
+                    "Access-Control-Allow-Headers": "Content-Type",
+                },
+            });
         }
         return NextResponse.json(response, {
             status: 200,
@@ -63,18 +65,17 @@ export async function DELETE(request) {
                 error: "Unauthorized - Admin access required",
             }, { status: 401 });
         }
-        databaseMetrics.resetMetrics();
         return NextResponse.json({
             success: true,
-            message: "Database metrics reset successfully",
+            message: "Health check endpoint - no metrics to reset",
             timestamp: new Date().toISOString(),
         });
     }
     catch (error) {
-        console.error("Failed to reset database metrics:", error);
+        console.error("Failed to process reset request:", error);
         return NextResponse.json({
             success: false,
-            error: "Failed to reset database metrics",
+            error: "Failed to process reset request",
             timestamp: new Date().toISOString(),
         }, { status: 500 });
     }

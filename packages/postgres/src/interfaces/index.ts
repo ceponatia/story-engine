@@ -27,23 +27,4 @@ export * from "./repository.interface";
 //   IDatabaseErrorHandler,
 // } from "./database-manager.interface";
 
-export type {
-  IRepository,
-  IRepositoryWithCache,
-  IRepositoryWithTransaction,
-  IAdvancedRepository,
-  IRepositoryFactory,
-  IRepositoryRegistry,
-  ICharacterRepository,
-  IAdventureRepository,
-  IEmbeddingRepository,
-  BaseRepository,
-  CreateDTO,
-  UpdateDTO,
-  FilterOptions,
-  PaginationOptions,
-  PaginatedResult,
-  RepositoryHealthStatus,
-  RepositoryMetrics,
-  RepositoryConfig,
-} from "./repository.interface";
+export type { IRepository, CreateDTO, UpdateDTO } from "./repository.interface";

@@ -6,10 +6,13 @@ export * from "./parsers/tag.parser";
 export * from "./db/base.repository";
 
 // Infrastructure
-export * from "./infrastructure/circuitBreaker";
-export * from "./infrastructure/metrics";
 export * from "./infrastructure/errorHandler";
 export * from "./infrastructure/fallbackManager";
+
+// Middleware
+export * from "./middleware/rateLimiter";
+export * from "./middleware/csrf";
+export * from "./middleware/validation";
 
 // Parsers
 export * from "./parsers/baseParser";

@@ -9,6 +9,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getJobStats, cleanupOldJobs, getNextPendingJob } from "@story-engine/postgres";
 import { createEmbeddingWorker } from "@/lib/ai/background-worker";
 import { requireAuth } from "@story-engine/auth";
+import { createSecureApiMiddleware } from "@story-engine/utils";
+import { adminJobActionSchema, healthCheckQuerySchema } from "@story-engine/validation";
 
 // Global worker instance for API route management
 interface WorkerInstance {
@@ -19,16 +21,49 @@ interface WorkerInstance {
 
 let apiWorker: WorkerInstance | null = null;
 
+// Create secure middleware for admin endpoints
+const secureAdminMiddleware = createSecureApiMiddleware({
+  rateLimit: {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 50, // 50 requests per 15 minutes
+    keyPrefix: "admin-jobs",
+  },
+  csrf: true, // Enable CSRF protection
+});
+
 /**
  * GET /api/admin/jobs - Get job statistics and worker status
  */
 export async function GET(request: NextRequest) {
+  // Apply security middleware
+  const middlewareResponse = await secureAdminMiddleware(request);
+  if (middlewareResponse.status !== 200) {
+    return middlewareResponse;
+  }
+
   try {
     // Require authentication for admin endpoints
     await requireAuth();
 
     const url = new URL(request.url);
     const action = url.searchParams.get("action");
+
+    // Validate query parameters
+    const queryValidation = healthCheckQuerySchema.safeParse({
+      detail: url.searchParams.get("detail") || "summary",
+      format: url.searchParams.get("format") || "json",
+    });
+
+    if (!queryValidation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid query parameters",
+          details: queryValidation.error.issues,
+        },
+        { status: 400 }
+      );
+    }
 
     if (action === "stats") {
       const stats = await getJobStats();
@@ -75,12 +110,32 @@ export async function GET(request: NextRequest) {
  * POST /api/admin/jobs - Manage worker process and jobs
  */
 export async function POST(request: NextRequest) {
+  // Apply security middleware
+  const middlewareResponse = await secureAdminMiddleware(request);
+  if (middlewareResponse.status !== 200) {
+    return middlewareResponse;
+  }
+
   try {
     // Require authentication for admin endpoints
     await requireAuth();
 
     const body = await request.json();
-    const { action } = body;
+
+    // Validate request body
+    const bodyValidation = adminJobActionSchema.safeParse(body);
+    if (!bodyValidation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid request body",
+          details: bodyValidation.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+
+    const { action } = bodyValidation.data;
 
     switch (action) {
       case "start-worker":

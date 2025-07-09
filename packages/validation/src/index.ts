@@ -1,16 +1,15 @@
 /**
- * Character Field Validation Module
+ * Validation Module
  *
- * Complete validation system for protecting character attributes from
- * unauthorized or inconsistent changes via LLM responses.
+ * Database-agnostic validation system for forms, entities, and shared utilities.
+ * Database-specific validation logic has been moved to respective packages.
  */
 
-// MongoDB schema exports
-export * from "./mongodb/character.schema";
-export * from "./mongodb/location.schema";
-export * from "./mongodb/setting.schema";
+// Form validation schemas (database-agnostic)
+export * from "./forms";
+
+// Entity validation schemas (database-agnostic)
+export * from "./entities";
 
 // Shared utilities
 export * from "./shared/validateUpdateKeys";
-
-// Note: Core validation services temporarily removed - need to be implemented

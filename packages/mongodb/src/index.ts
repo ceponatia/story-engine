@@ -1,6 +1,7 @@
 // MongoDB Package Exports
 export * from "./connection";
 export * from "./repositories";
+export * from "./validation";
 
 // Re-export repository classes for convenience
 export { MongoCharacterRepository } from "./repositories/character.repository";

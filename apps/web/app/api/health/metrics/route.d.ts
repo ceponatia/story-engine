@@ -1,24 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 export declare function GET(request: NextRequest): Promise<NextResponse<{
     timestamp: string;
-    metrics: {
-        overall: any;
+    health: {
         databases: {
-            postgres: any;
-            redis: any;
-            qdrant: any;
-            mongodb: any;
+            postgres: boolean;
+            mongodb: boolean;
+            redis: boolean;
+            qdrant: boolean;
         };
-        health: {
-            databases: {
-                postgres: boolean;
-                mongodb: boolean;
-                redis: boolean;
-                qdrant: boolean;
-            };
-            overall: string;
-        };
+        overall: string;
     };
+    uptime: number;
 }> | NextResponse<{
     success: boolean;
     error: string;

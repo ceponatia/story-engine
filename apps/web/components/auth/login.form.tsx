@@ -16,21 +16,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { signIn } from "@story-engine/auth";
+import { loginFormSchema, type LoginFormInput } from "@story-engine/validation";
 import Link from "next/link";
 
-const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
-
-type LoginFormData = z.infer<typeof loginSchema>;
+type LoginFormData = LoginFormInput;
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const form = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
       password: "",

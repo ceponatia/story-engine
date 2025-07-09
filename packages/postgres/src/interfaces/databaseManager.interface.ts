@@ -139,30 +139,6 @@ export interface Result<T> {
   degraded?: boolean;
 }
 
-// Circuit Breaker Types
-export enum CircuitState {
-  CLOSED = "closed",
-  OPEN = "open",
-  HALF_OPEN = "half_open",
-}
-
-export interface CircuitBreakerOptions {
-  failureThreshold?: number;
-  recoveryTimeout?: number;
-  monitoringPeriod?: number;
-}
-
-export interface ICircuitBreaker {
-  execute<T>(
-    operationName: string,
-    operation: () => Promise<T>,
-    options?: CircuitBreakerOptions
-  ): Promise<T>;
-
-  getState(operationName: string): CircuitState;
-  reset(operationName: string): void;
-}
-
 // Error Handling Types
 export enum DatabaseErrorType {
   CONNECTION_ERROR = "connection_error",

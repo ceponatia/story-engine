@@ -1,69 +1,90 @@
 /**
- * Database Metrics API Endpoint
+ * Database Health API Endpoint
  *
- * Implements Step 5.2 from 71.md: Dashboard Implementation
- * Provides comprehensive performance metrics for monitoring dashboards
+ * Provides basic database health status for monitoring dashboards
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { databaseMetrics } from "@story-engine/postgres/metrics";
-import { getDatabase } from "@story-engine/postgres";
+import { checkAllDatabaseHealth, getOverallHealthStatus } from "@/lib/database";
+import { createSecureApiMiddleware } from "@story-engine/utils";
+import { healthCheckQuerySchema } from "@story-engine/validation";
+import { requireAuth } from "@story-engine/auth";
+
+// Create secure middleware for health endpoints
+const secureHealthMiddleware = createSecureApiMiddleware({
+  rateLimit: {
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    max: 100, // 100 requests per 5 minutes
+    keyPrefix: "health-metrics",
+  },
+});
 
 export async function GET(request: NextRequest) {
+  // Apply security middleware
+  const middlewareResponse = await secureHealthMiddleware(request);
+  if (middlewareResponse.status !== 200) {
+    return middlewareResponse;
+  }
+
   try {
     // Get query parameters for filtering
     const { searchParams } = new URL(request.url);
-    const detail = searchParams.get("detail") || "summary";
-    const repository = searchParams.get("repository");
 
-    // Get comprehensive metrics
-    const metrics = databaseMetrics.getAllMetrics();
+    // Validate query parameters
+    const queryValidation = healthCheckQuerySchema.safeParse({
+      detail: searchParams.get("detail") || "summary",
+      format: searchParams.get("format") || "json",
+    });
+
+    if (!queryValidation.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid query parameters",
+          details: queryValidation.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+
+    const { detail } = queryValidation.data;
 
     // Get multi-database health status
-    const { checkAllDatabaseHealth, getOverallHealthStatus } = await import("@/lib/database");
     const healthStatus = await checkAllDatabaseHealth();
     const overallHealth = await getOverallHealthStatus();
 
     // Base response structure
     const response = {
       timestamp: new Date().toISOString(),
-      metrics: {
-        overall: metrics.overall,
-        databases: {
-          postgres: metrics.postgres,
-          redis: metrics.redis,
-          qdrant: metrics.qdrant,
-          mongodb: metrics.mongodb,
-        },
-        health: {
-          databases: healthStatus,
-          overall: overallHealth,
-        },
+      health: {
+        databases: healthStatus,
+        overall: overallHealth,
       },
+      uptime: process.uptime() * 1000, // Convert to milliseconds
     };
 
-    // Add detailed information based on query parameters
+    // Add detailed information if requested
     if (detail === "full") {
-      // TODO: Add queryHistory and slowQueries to metrics type
-      // response.metrics.queryHistory = databaseMetrics.getRecentQueries(100);
-      // response.metrics.slowQueries = databaseMetrics.getSlowQueries();
+      const detailedResponse = {
+        ...response,
+        environment: {
+          nodeVersion: process.version,
+          platform: process.platform,
+          memoryUsage: process.memoryUsage(),
+        },
+      };
 
-      // Repository-specific metrics if requested
-      if (repository) {
-        // response.metrics.repositoryDetail = databaseMetrics.getRepositoryMetrics(repository);
-      }
+      return NextResponse.json(detailedResponse, {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
     }
-
-    // Add performance summary
-    // TODO: Add summary to response type
-    // response.summary = {
-    //   totalQueries: metrics.overall.totalRequestsPerSecond * (metrics.overall.uptime / 1000),
-    //   averageLatency: metrics.overall.averageLatency,
-    //   cacheHitRate: metrics.redis.hitRate,
-    //   healthScore: metrics.overall.healthScore,
-    //   uptime: formatUptime(metrics.overall.uptime),
-    //   lastUpdated: metrics.timestamp,
-    // };
 
     return NextResponse.json(response, {
       status: 200,
@@ -95,37 +116,35 @@ export async function GET(request: NextRequest) {
 }
 
 /**
- * GET /api/health/metrics/reset - Reset metrics (admin only)
+ * DELETE /api/health/metrics - Admin endpoint (placeholder for future metrics reset)
  */
 export async function DELETE(request: NextRequest) {
+  // Apply security middleware
+  const middlewareResponse = await secureHealthMiddleware(request);
+  if (middlewareResponse.status !== 200) {
+    return middlewareResponse;
+  }
+
   try {
-    // Basic security check - in production, add proper admin authentication
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader || !authHeader.includes("admin")) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Unauthorized - Admin access required",
-        },
-        { status: 401 }
-      );
-    }
+    // Require proper authentication for admin endpoints
+    await requireAuth();
 
-    // Reset all metrics
-    databaseMetrics.resetMetrics();
+    // Additional admin role check would go here in production
+    // For now, any authenticated user can perform this operation
 
+    // Placeholder for future metrics reset functionality
     return NextResponse.json({
       success: true,
-      message: "Database metrics reset successfully",
+      message: "Health check endpoint - no metrics to reset",
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Failed to reset database metrics:", error);
+    console.error("Failed to process reset request:", error);
 
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to reset database metrics",
+        error: "Failed to process reset request",
         timestamp: new Date().toISOString(),
       },
       { status: 500 }
