@@ -138,3 +138,13 @@ dist
 # Utilities folder (development-only files)
 utilities/
 /dist/
+
+# pnpm
+.pnpm-store/
+.pnpm-cache/
+
+# Turborepo
+.turbo/
+
+# swc
+.swc/
