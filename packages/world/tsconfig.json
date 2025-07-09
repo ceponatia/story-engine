@@ -3,14 +3,20 @@
   "compilerOptions": {
     "composite": true,
     "removeComments": true,
-    "outDir": "../../dist/world",
+    "outDir": "./dist",
     "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
       "@story-engine/types": ["../../types/src"],
-      "@story-engine/mongodb": ["../../mongodb/src"]
+      "@story-engine/mongodb": ["../../mongodb/src"],
+      "@story-engine/auth": ["../../auth/src"]
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    {"path": "../types"},
+    {"path": "../mongodb"},
+    {"path": "../auth"}
+  ]
 }

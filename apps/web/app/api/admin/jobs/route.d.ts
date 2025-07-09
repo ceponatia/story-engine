@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-export declare function GET(request: NextRequest): Promise<NextResponse<{
+export declare function GET(request: NextRequest): Promise<import("next/server").NextResponse<unknown> | NextResponse<{
     success: boolean;
     stats: any;
     worker: {
@@ -13,7 +13,7 @@ export declare function GET(request: NextRequest): Promise<NextResponse<{
     success: boolean;
     error: string;
 }>>;
-export declare function POST(request: NextRequest): Promise<NextResponse<{
+export declare function POST(request: NextRequest): Promise<import("next/server").NextResponse<unknown> | NextResponse<{
     success: boolean;
     error: string;
 }> | NextResponse<{

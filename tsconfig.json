@@ -5,6 +5,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": false,
     "removeComments": true,
@@ -33,8 +34,7 @@
       "@story-engine/auth": ["packages/auth/src"],
       "@story-engine/domain-characters": ["packages/domain/characters/src"],
       "@story-engine/world": ["packages/world/src"],
-      "@story-engine/utils": ["packages/utils/src"],
-      "@/*": ["apps/web/*"]
+      "@story-engine/utils": ["packages/utils/src"]
     }
   },
   "include": [],

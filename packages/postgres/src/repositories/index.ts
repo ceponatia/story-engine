@@ -15,9 +15,9 @@ import type { PoolClient } from "pg";
 export * from "./adventure.repository";
 export { adventureRepository } from "./adventure.repository";
 
-// Adventure Character Repository - TODO: implement
-// export * from "./adventure-character.repository";
-// export { adventureCharacterRepository } from "./adventure-character.repository";
+// Adventure Character Repository
+export * from "./adventureCharacter.repository";
+export { adventureCharacterRepository } from "./adventureCharacter.repository";
 
 // Adventure Message Repository - TODO: implement
 // export * from "./adventure-message.repository";

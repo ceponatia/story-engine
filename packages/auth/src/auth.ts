@@ -7,7 +7,7 @@ import { getDatabase } from "@story-engine/postgres";
 export const auth = betterAuth({
   database: getDatabase(),
   databaseType: "postgres",
-  secret: process.env.BETTER_AUTH_SECRET,
+  secret: process.env.BETTER_AUTH_SECRET || "",
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
   trustedOrigins: [
     "http://localhost:3000",

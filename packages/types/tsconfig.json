@@ -5,11 +5,11 @@
     "removeComments": true,
     "outDir": "../../dist/types",
     "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {
-      "@validation/*": ["../validation/src/*"]
-    }
+    "baseUrl": "./src"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../validation" }
+  ]
 }

@@ -1,8 +1,8 @@
-import { mergeCharacterStates } from './modifiers/mergeCharacterStates';
-import { updateField } from './modifiers/updateField';
-import { validateUpdateKeys } from './modifiers/validateUpdateKeys';
+import { mergeCharacterStates } from "./updaters/modifiers/mergeCharacterStates";
+import { updateField } from "./updaters/modifiers/updateField";
+import { validateUpdateKeys } from "@story-engine/validation";
 
-const allowedKeys = ['name', 'description', 'tags', 'fields'];
+const allowedKeys = ["name", "description", "tags", "fields"];
 
 export function updateCharacter(base: any, updates: any): any {
   validateUpdateKeys(updates, allowedKeys);
@@ -16,6 +16,6 @@ export function updateCharacter(base: any, updates: any): any {
   return {
     ...merged,
     fields: updatedFields,
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
   };
 }

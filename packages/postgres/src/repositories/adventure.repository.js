@@ -62,8 +62,8 @@ export class AdventureRepository {
                     gender: adventure.persona_gender,
                     is_private: true,
                     created_by: userId,
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
+                    created_at: new Date(),
+                    updated_at: new Date(),
                 };
             }
             return adventureWithPersona;

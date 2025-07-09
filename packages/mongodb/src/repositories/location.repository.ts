@@ -1,6 +1,10 @@
 import { getMongoConnection } from "../connection";
-import { Location, LocationFormData } from "@story-engine/types/entities";
-import { LocationDocument, IMongoLocationRepository } from "@story-engine/types/mongodb";
+import {
+  Location,
+  LocationFormData,
+  LocationDocument,
+  IMongoLocationRepository,
+} from "@story-engine/types";
 import { parseTagsFromString, BaseRepositoryImpl } from "@story-engine/utils";
 import { ObjectId } from "mongodb";
 

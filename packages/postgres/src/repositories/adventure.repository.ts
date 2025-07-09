@@ -136,8 +136,8 @@ export class AdventureRepository implements AdventureRepository {
           gender: adventure.persona_gender,
           is_private: true, // Default value
           created_by: userId,
-          created_at: new Date().toISOString(), // Placeholder
-          updated_at: new Date().toISOString(), // Placeholder
+          created_at: new Date(), // Placeholder
+          updated_at: new Date(), // Placeholder
         };
       }
 

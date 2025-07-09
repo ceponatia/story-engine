@@ -13,6 +13,7 @@ export * from "./infrastructure/fallbackManager";
 export * from "./middleware/rateLimiter";
 export * from "./middleware/csrf";
 export * from "./middleware/validation";
+export * from "./middleware/auth";
 
 // Parsers
 export * from "./parsers/baseParser";

@@ -1,6 +1,10 @@
 import { getMongoConnection } from "../connection";
-import { Setting, SettingFormData } from "@story-engine/types/entities";
-import { SettingDocument, IMongoSettingRepository } from "@story-engine/types/mongodb";
+import {
+  Setting,
+  SettingFormData,
+  SettingDocument,
+  IMongoSettingRepository,
+} from "@story-engine/types";
 import { parseTagsFromString, BaseRepositoryImpl } from "@story-engine/utils";
 import { ObjectId } from "mongodb";
 

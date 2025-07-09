@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Database connection check
-export const hasDbConfig = process.env.DATABASE_URL;
+export const hasDbConfig = process.env.DATABASE_URL || "";
 
 // Re-export tag utility functions from utils package
 export { formatTagName, parseTagsFromString };

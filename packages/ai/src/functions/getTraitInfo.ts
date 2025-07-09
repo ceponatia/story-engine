@@ -8,7 +8,7 @@
  * Based on consensus analysis and existing codebase patterns.
  */
 
-import getDatabase from "../../postgres/pool";
+import { getDatabase } from "@story-engine/postgres";
 import {
   COMPREHENSIVE_ATTRIBUTE_SCHEMA,
   type AttributeKey,

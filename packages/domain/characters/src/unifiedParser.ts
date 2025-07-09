@@ -136,7 +136,7 @@ function normalizeCategory(category: string): string {
     .replace(/_colour$/, "");
 
   // Normalize singular/plural forms for consistency
-  const singularToPlural = {
+  const singularToPlural: { [key: string]: string } = {
     foot: "feet",
     hand: "hands",
     eye: "eyes",

@@ -2,22 +2,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { signIn } from "@story-engine/auth";
+import { loginFormSchema } from "@story-engine/validation";
 import Link from "next/link";
-const loginSchema = z.object({
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-});
 export function LoginForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const form = useForm({
-        resolver: zodResolver(loginSchema),
+        resolver: zodResolver(loginFormSchema),
         defaultValues: {
             email: "",
             password: "",

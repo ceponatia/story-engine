@@ -1,13 +1,38 @@
 import { NextResponse } from "next/server";
 import { getJobStats, cleanupOldJobs, getNextPendingJob } from "@story-engine/postgres";
 import { createEmbeddingWorker } from "@/lib/ai/background-worker";
-import { requireAuth } from "@story-engine/auth";
+import { requireAdminAuth } from "@story-engine/auth";
+import { createSecureApiMiddleware } from "@story-engine/utils";
+import { adminJobActionSchema, healthCheckQuerySchema } from "@story-engine/validation";
 let apiWorker = null;
+const secureAdminMiddleware = createSecureApiMiddleware({
+    rateLimit: {
+        windowMs: 15 * 60 * 1000,
+        max: 50,
+        keyPrefix: "admin-jobs",
+    },
+    csrf: true,
+});
 export async function GET(request) {
+    const middlewareResponse = await secureAdminMiddleware(request);
+    if (middlewareResponse.status !== 200) {
+        return middlewareResponse;
+    }
     try {
-        await requireAuth();
+        await requireAdminAuth();
         const url = new URL(request.url);
         const action = url.searchParams.get("action");
+        const queryValidation = healthCheckQuerySchema.safeParse({
+            detail: url.searchParams.get("detail") || "summary",
+            format: url.searchParams.get("format") || "json",
+        });
+        if (!queryValidation.success) {
+            return NextResponse.json({
+                success: false,
+                error: "Invalid query parameters",
+                details: queryValidation.error.issues,
+            }, { status: 400 });
+        }
         if (action === "stats") {
             const stats = await getJobStats();
             const workerStatus = {
@@ -41,10 +66,22 @@ export async function GET(request) {
     }
 }
 export async function POST(request) {
+    const middlewareResponse = await secureAdminMiddleware(request);
+    if (middlewareResponse.status !== 200) {
+        return middlewareResponse;
+    }
     try {
-        await requireAuth();
+        await requireAdminAuth();
         const body = await request.json();
-        const { action } = body;
+        const bodyValidation = adminJobActionSchema.safeParse(body);
+        if (!bodyValidation.success) {
+            return NextResponse.json({
+                success: false,
+                error: "Invalid request body",
+                details: bodyValidation.error.issues,
+            }, { status: 400 });
+        }
+        const { action } = bodyValidation.data;
         switch (action) {
             case "start-worker":
                 if (apiWorker) {

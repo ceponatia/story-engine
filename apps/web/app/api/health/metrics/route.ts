@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkAllDatabaseHealth, getOverallHealthStatus } from "@/lib/database";
 import { createSecureApiMiddleware } from "@story-engine/utils";
 import { healthCheckQuerySchema } from "@story-engine/validation";
-import { requireAuth } from "@story-engine/auth";
+import { requireAuth, requireAdminAuth } from "@story-engine/auth";
 
 // Create secure middleware for health endpoints
 const secureHealthMiddleware = createSecureApiMiddleware({
@@ -126,11 +126,8 @@ export async function DELETE(request: NextRequest) {
   }
 
   try {
-    // Require proper authentication for admin endpoints
-    await requireAuth();
-
-    // Additional admin role check would go here in production
-    // For now, any authenticated user can perform this operation
+    // Require admin authentication for admin endpoints
+    await requireAdminAuth();
 
     // Placeholder for future metrics reset functionality
     return NextResponse.json({

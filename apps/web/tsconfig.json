@@ -14,13 +14,10 @@
         "./components/character"
       ],
       "@types/*": [
-        "../../packages/types/*"
+        "../../packages/types"
       ],
       "@validation/*": [
-        "../../packages/validation/*"
-      ],
-      "@story-engine/*": [
-        "../../packages/*"
+        "../../packages/validation"
       ]
     },
     "plugins": [

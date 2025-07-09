@@ -1,9 +1,34 @@
 import { NextResponse } from "next/server";
 import { checkAllDatabaseHealth, getOverallHealthStatus } from "@/lib/database";
+import { createSecureApiMiddleware } from "@story-engine/utils";
+import { healthCheckQuerySchema } from "@story-engine/validation";
+import { requireAdminAuth } from "@story-engine/auth";
+const secureHealthMiddleware = createSecureApiMiddleware({
+    rateLimit: {
+        windowMs: 5 * 60 * 1000,
+        max: 100,
+        keyPrefix: "health-metrics",
+    },
+});
 export async function GET(request) {
+    const middlewareResponse = await secureHealthMiddleware(request);
+    if (middlewareResponse.status !== 200) {
+        return middlewareResponse;
+    }
     try {
         const { searchParams } = new URL(request.url);
-        const detail = searchParams.get("detail") || "summary";
+        const queryValidation = healthCheckQuerySchema.safeParse({
+            detail: searchParams.get("detail") || "summary",
+            format: searchParams.get("format") || "json",
+        });
+        if (!queryValidation.success) {
+            return NextResponse.json({
+                success: false,
+                error: "Invalid query parameters",
+                details: queryValidation.error.issues,
+            }, { status: 400 });
+        }
+        const { detail } = queryValidation.data;
         const healthStatus = await checkAllDatabaseHealth();
         const overallHealth = await getOverallHealthStatus();
         const response = {
@@ -57,14 +82,12 @@ export async function GET(request) {
     }
 }
 export async function DELETE(request) {
+    const middlewareResponse = await secureHealthMiddleware(request);
+    if (middlewareResponse.status !== 200) {
+        return middlewareResponse;
+    }
     try {
-        const authHeader = request.headers.get("authorization");
-        if (!authHeader || !authHeader.includes("admin")) {
-            return NextResponse.json({
-                success: false,
-                error: "Unauthorized - Admin access required",
-            }, { status: 401 });
-        }
+        await requireAdminAuth();
         return NextResponse.json({
             success: true,
             message: "Health check endpoint - no metrics to reset",

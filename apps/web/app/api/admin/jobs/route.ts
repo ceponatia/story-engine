@@ -8,7 +8,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getJobStats, cleanupOldJobs, getNextPendingJob } from "@story-engine/postgres";
 import { createEmbeddingWorker } from "@/lib/ai/background-worker";
-import { requireAuth } from "@story-engine/auth";
+import { requireAdminAuth } from "@story-engine/auth";
 import { createSecureApiMiddleware } from "@story-engine/utils";
 import { adminJobActionSchema, healthCheckQuerySchema } from "@story-engine/validation";
 
@@ -42,8 +42,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Require authentication for admin endpoints
-    await requireAuth();
+    // Require admin authentication for admin endpoints
+    await requireAdminAuth();
 
     const url = new URL(request.url);
     const action = url.searchParams.get("action");
@@ -117,8 +117,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // Require authentication for admin endpoints
-    await requireAuth();
+    // Require admin authentication for admin endpoints
+    await requireAdminAuth();
 
     const body = await request.json();
 

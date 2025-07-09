@@ -8,8 +8,9 @@
  * - Run: ML/NLP techniques for complex detection
  */
 
-import { parseCharacterUpdate, getFieldType } from "../../parsers/character-update-parser";
-import { UnifiedParserResult } from "../../parsers/unified-parser";
+// TODO: Create character-update-parser module or use alternative parsing
+// import { parseCharacterUpdate, getFieldType } from "character-update-parser";
+import { UnifiedParserResult } from "@story-engine/domain-characters";
 
 export interface StateExtraction {
   fieldType: "appearance" | "personality" | "scents" | "location" | "emotion" | "action";

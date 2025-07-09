@@ -5,9 +5,9 @@
  * in the adventure_characters table, maintaining a history of changes.
  */
 
-import { adventureCharacterRepository } from "@/lib/postgres/repositories";
+import { adventureCharacterRepository } from "@story-engine/postgres";
 import { StateExtraction, StateExtractionResult } from "./state-extractor";
-import { UnifiedParserResult, mergeAttributes } from "../../parsers/unified-parser";
+import { UnifiedParserResult, mergeAttributes } from "@story-engine/domain-characters";
 
 export interface StateUpdate {
   field: string;

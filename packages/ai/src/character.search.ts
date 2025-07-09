@@ -7,15 +7,16 @@
  */
 
 import { findSimilarTraits } from "./embedding-service";
-import { adventureCharacterRepository, getAdventureMessages } from "@/lib/postgres/repositories";
+import { adventureCharacterRepository } from "@story-engine/postgres";
+// TODO: Create or import getAdventureMessages function
 import { DEFAULT_EMBEDDING_MODEL, EMBEDDING_CONFIG } from "./config/embeddings";
-import type { SearchResult, ConversationMessage } from "../../types/search";
+import type { SearchResult, ConversationMessage } from "@story-engine/types";
 import {
   searchConversationMessages,
   conversationMatchesToSearchResults,
   CONVERSATION_DEFAULTS,
-} from "../../utils/search/conversation.parser";
-import { SIMILARITY_THRESHOLDS } from "../../utils/search/similarity.parser";
+} from "@story-engine/utils";
+import { SIMILARITY_THRESHOLDS } from "@story-engine/utils";
 
 export interface CharacterSearchContext {
   adventureId: string;

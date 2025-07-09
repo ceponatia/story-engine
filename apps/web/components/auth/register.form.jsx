@@ -2,29 +2,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { signUp } from "@story-engine/auth";
+import { registerFormSchema } from "@story-engine/validation";
 import Link from "next/link";
-const registerSchema = z
-    .object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
-})
-    .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-});
 export function RegisterForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const form = useForm({
-        resolver: zodResolver(registerSchema),
+        resolver: zodResolver(registerFormSchema),
         defaultValues: {
             name: "",
             email: "",
