@@ -6,7 +6,10 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "noEmit": false,
+    "removeComments": true,
+    "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -16,15 +19,41 @@
     "incremental": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@story-engine/*": ["packages/*/src"],
+      "@story-engine/types": ["packages/types/src"],
+      "@story-engine/validation": ["packages/validation/src"],
+      "@story-engine/postgres": ["packages/postgres/src"],
+      "@story-engine/mongodb": ["packages/mongodb/src"],
+      "@story-engine/redis": ["packages/redis/src"],
+      "@story-engine/qdrant": ["packages/qdrant/src"],
+      "@story-engine/adventures": ["packages/adventures/src"],
+      "@story-engine/ai": ["packages/ai/src"],
+      "@story-engine/auth": ["packages/auth/src"],
+      "@story-engine/domain-characters": ["packages/domain/characters/src"],
+      "@story-engine/world": ["packages/world/src"],
+      "@story-engine/sharedUtils": ["packages/sharedUtils/src"],
+      "@story-engine/utils": ["packages/utils/src"],
+      "@/*": ["apps/web/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [],
+  "exclude": ["node_modules"],
+  "references": [
+    { "path": "./apps/web" },
+    { "path": "./packages/types" },
+    { "path": "./packages/validation" },
+    { "path": "./packages/postgres" },
+    { "path": "./packages/mongodb" },
+    { "path": "./packages/redis" },
+    { "path": "./packages/qdrant" },
+    { "path": "./packages/adventures" },
+    { "path": "./packages/ai" },
+    { "path": "./packages/auth" },
+    { "path": "./packages/domain/characters" },
+    { "path": "./packages/world" },
+    { "path": "./packages/sharedUtils" },
+    { "path": "./packages/utils" }
+  ]
 }

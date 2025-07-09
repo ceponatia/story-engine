@@ -1,0 +1,184 @@
+{
+  "version": "1.0.0",
+  "description": "Character attribute schema mapping for context-aware retrieval",
+  "attributes": {
+    "appearance": {
+      "hair_color": {
+        "path": "hair.color",
+        "keywords": ["hair", "color", "brown", "blonde", "black", "red", "silver", "gray"],
+        "aliases": ["hair color", "hair colour"],
+        "description": "Character hair color and shade",
+        "examples": ["her brown hair", "his blonde locks", "hair color"]
+      },
+      "hair_style": {
+        "path": "hair.style",
+        "keywords": ["hair", "style", "long", "short", "curly", "straight", "wavy", "braided"],
+        "aliases": ["hairstyle", "hair style"],
+        "description": "Character hair styling and length",
+        "examples": ["long hair", "curly hairstyle", "straight hair"]
+      },
+      "hair_length": {
+        "path": "hair.length",
+        "keywords": ["hair", "length", "long", "short", "medium", "shoulder"],
+        "aliases": ["hair length"],
+        "description": "Length of character's hair",
+        "examples": ["shoulder-length hair", "long hair", "short hair"]
+      },
+      "eye_color": {
+        "path": "eyes.color",
+        "keywords": ["eyes", "eye", "color", "blue", "green", "brown", "hazel", "gray"],
+        "aliases": ["eye color", "eye colour"],
+        "description": "Character eye color",
+        "examples": ["blue eyes", "her green eyes", "eye color"]
+      },
+      "height": {
+        "path": "body.height",
+        "keywords": ["height", "tall", "short", "size", "stature"],
+        "aliases": ["how tall", "height"],
+        "description": "Character height and stature",
+        "examples": ["how tall is she", "her height", "tall character"]
+      },
+      "build": {
+        "path": "body.build",
+        "keywords": ["build", "body", "slim", "athletic", "muscular", "petite", "curvy"],
+        "aliases": ["body type", "physique", "body build"],
+        "description": "Character body build and physique",
+        "examples": ["athletic build", "slim body", "muscular physique"]
+      },
+      "skin": {
+        "path": "skin.tone",
+        "keywords": ["skin", "complexion", "tone", "pale", "tan", "dark", "fair"],
+        "aliases": ["skin tone", "complexion"],
+        "description": "Character skin tone and complexion",
+        "examples": ["pale skin", "dark complexion", "skin tone"]
+      }
+    },
+    "scents_aromas": {
+      "feet_scent": {
+        "path": "feet.scents",
+        "keywords": ["feet", "foot", "smell", "scent", "odor", "aroma", "stinky", "sweaty"],
+        "aliases": ["feet smell", "foot odor", "feet aroma"],
+        "description": "Character feet scent and aroma",
+        "examples": ["her feet smell", "foot odor", "smelly feet"]
+      },
+      "body_scent": {
+        "path": "body.scents",
+        "keywords": ["body", "smell", "scent", "perfume", "natural", "musk", "fragrance"],
+        "aliases": ["body odor", "body scent", "natural scent"],
+        "description": "Character natural body scent",
+        "examples": ["her natural scent", "body fragrance", "musky smell"]
+      },
+      "hair_scent": {
+        "path": "hair.scents",
+        "keywords": ["hair", "shampoo", "scent", "fragrance", "conditioner"],
+        "aliases": ["hair smell", "hair fragrance", "shampoo scent"],
+        "description": "Character hair scent and fragrance",
+        "examples": ["shampoo scent", "her hair smells", "hair fragrance"]
+      },
+      "clothing_scent": {
+        "path": "clothing.scents",
+        "keywords": ["clothes", "clothing", "fabric", "laundry", "detergent"],
+        "aliases": ["clothing smell", "fabric scent"],
+        "description": "Scent from character's clothing",
+        "examples": ["clothing smells", "fabric softener", "laundry scent"]
+      }
+    },
+    "personality": {
+      "traits": {
+        "path": "traits",
+        "keywords": [
+          "personality",
+          "character",
+          "shy",
+          "outgoing",
+          "kind",
+          "traits",
+          "friendly",
+          "confident"
+        ],
+        "aliases": ["personality traits", "character traits"],
+        "description": "Core personality characteristics",
+        "examples": ["shy personality", "outgoing character", "personality traits"]
+      },
+      "emotional_state": {
+        "path": "emotional_state",
+        "keywords": ["feeling", "emotion", "mood", "happy", "sad", "angry", "excited", "nervous"],
+        "aliases": ["mood", "feelings", "emotional state"],
+        "description": "Current emotional condition",
+        "examples": ["feeling happy", "her mood", "emotional state"]
+      },
+      "behavioral_patterns": {
+        "path": "behavioral_patterns",
+        "keywords": ["behavior", "habits", "patterns", "usual", "typically", "always", "often"],
+        "aliases": ["behavior patterns", "habits", "usual behavior"],
+        "description": "Behavioral habits and patterns",
+        "examples": ["usual behavior", "her habits", "behavioral patterns"]
+      },
+      "social_style": {
+        "path": "social_style",
+        "keywords": ["social", "interaction", "people", "groups", "introvert", "extrovert"],
+        "aliases": ["social behavior", "interaction style"],
+        "description": "How character interacts socially",
+        "examples": ["social interaction", "how she acts with people", "social style"]
+      }
+    },
+    "background": {
+      "history": {
+        "path": "",
+        "keywords": ["background", "history", "past", "story", "origin", "childhood", "family"],
+        "aliases": ["personal history", "backstory", "past"],
+        "description": "Character background and history",
+        "examples": ["her background", "personal history", "past story"]
+      },
+      "occupation": {
+        "path": "occupation",
+        "keywords": ["job", "work", "occupation", "career", "profession", "employment"],
+        "aliases": ["job", "career", "work"],
+        "description": "Character profession or occupation",
+        "examples": ["her job", "what does she do", "occupation"]
+      },
+      "education": {
+        "path": "education",
+        "keywords": ["education", "school", "college", "university", "degree", "studied"],
+        "aliases": ["education", "schooling", "studies"],
+        "description": "Character educational background",
+        "examples": ["her education", "where did she study", "school background"]
+      },
+      "relationships": {
+        "path": "relationships",
+        "keywords": ["family", "friends", "relationships", "partner", "spouse", "siblings"],
+        "aliases": ["relationships", "family", "connections"],
+        "description": "Character relationships and connections",
+        "examples": ["her family", "relationships", "personal connections"]
+      }
+    }
+  },
+  "query_patterns": {
+    "direct_attribute": {
+      "examples": ["What color are her eyes?", "How tall is she?", "What does her hair look like?"],
+      "confidence_bonus": 0.3
+    },
+    "descriptive_reference": {
+      "examples": ["Her brown hair", "His muscular build", "The scent of her feet"],
+      "confidence_bonus": 0.2
+    },
+    "comparative": {
+      "examples": ["She's taller than", "Her hair is longer than", "Smells worse than"],
+      "confidence_bonus": 0.1
+    },
+    "possessive": {
+      "examples": ["Her hair", "His eyes", "Their personality"],
+      "confidence_bonus": 0.2
+    }
+  },
+  "fallback_rules": {
+    "ambiguous_references": [
+      "tell me about her",
+      "what's she like",
+      "describe the character",
+      "character details"
+    ],
+    "confidence_threshold": 0.6,
+    "max_attributes_per_query": 5
+  }
+}

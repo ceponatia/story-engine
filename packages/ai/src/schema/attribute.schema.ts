@@ -1,0 +1,601 @@
+/**
+ * Comprehensive Character Attribute Schema for Story Engine
+ *
+ * This schema defines all possible character traits that can be stored in JSONB
+ * columns and referenced through natural language conversation analysis.
+ *
+ * Based on consensus analysis from expert models and existing database patterns.
+ * Version: 1.0.0
+ */
+
+export const COMPREHENSIVE_ATTRIBUTE_SCHEMA = {
+  // =============================================================================
+  // PHYSICAL ATTRIBUTES
+  // =============================================================================
+
+  // General Physical Characteristics
+  height: {
+    column: "appearance",
+    path: "body.height",
+    keywords: ["height", "tall", "short", "size", "stature"],
+    aliases: ["how tall", "body height"],
+    description: "Character height and overall stature",
+  },
+  weight: {
+    column: "appearance",
+    path: "body.weight",
+    keywords: ["weight", "heavy", "light", "thin", "fat", "skinny", "chubby"],
+    aliases: ["body weight", "build"],
+    description: "Character weight and body mass",
+  },
+  body_type: {
+    column: "appearance",
+    path: "body.type",
+    keywords: ["build", "athletic", "muscular", "slim", "curvy", "stocky"],
+    aliases: ["body type", "physique", "figure"],
+    description: "Overall body build and physique",
+  },
+
+  // Face and Head
+  eye_color: {
+    column: "appearance",
+    path: "face.eyes.color",
+    keywords: ["eyes", "eye", "color", "blue", "green", "brown", "hazel", "amber"],
+    aliases: ["eye color", "eye colour"],
+    description: "Character eye color",
+  },
+  eye_shape: {
+    column: "appearance",
+    path: "face.eyes.shape",
+    keywords: ["eyes", "eye", "shape", "almond", "round", "narrow"],
+    aliases: ["eye shape"],
+    description: "Shape and appearance of eyes",
+  },
+  hair_color: {
+    column: "appearance",
+    path: "hair.color",
+    keywords: ["hair", "color", "brown", "blonde", "black", "red", "silver", "gray"],
+    aliases: ["hair color", "hair colour"],
+    description: "Character hair color",
+  },
+  hair_style: {
+    column: "appearance",
+    path: "hair.style",
+    keywords: ["hair", "style", "long", "short", "curly", "straight", "braided", "ponytail", "bob"],
+    aliases: ["hairstyle", "hair style"],
+    description: "Character hair styling and arrangement",
+  },
+  hair_length: {
+    column: "appearance",
+    path: "hair.length",
+    keywords: ["hair", "length", "long", "short", "medium", "shoulder"],
+    aliases: ["hair length"],
+    description: "Length of character hair",
+  },
+  hair_texture: {
+    column: "appearance",
+    path: "hair.texture",
+    keywords: ["hair", "texture", "curly", "straight", "wavy", "coarse", "fine"],
+    aliases: ["hair texture"],
+    description: "Texture and feel of character hair",
+  },
+  facial_hair: {
+    column: "appearance",
+    path: "face.facial_hair",
+    keywords: ["beard", "mustache", "goatee", "stubble", "facial hair"],
+    aliases: ["facial hair", "beard", "mustache"],
+    description: "Facial hair style and appearance",
+  },
+  nose_shape: {
+    column: "appearance",
+    path: "face.nose.shape",
+    keywords: ["nose", "shape", "pointed", "button", "aquiline", "straight"],
+    aliases: ["nose shape"],
+    description: "Shape and size of nose",
+  },
+  lips: {
+    column: "appearance",
+    path: "face.lips",
+    keywords: ["lips", "mouth", "full", "thin", "pouty", "smile"],
+    aliases: ["lip shape", "mouth"],
+    description: "Lip shape and mouth appearance",
+  },
+
+  // Skin
+  skin_tone: {
+    column: "appearance",
+    path: "skin.tone",
+    keywords: ["skin", "tone", "pale", "dark", "olive", "tan", "complexion"],
+    aliases: ["skin tone", "complexion"],
+    description: "Character skin color and tone",
+  },
+  skin_texture: {
+    column: "appearance",
+    path: "skin.texture",
+    keywords: ["skin", "texture", "smooth", "rough", "soft", "weathered"],
+    aliases: ["skin texture"],
+    description: "Texture and feel of character skin",
+  },
+  scars: {
+    column: "appearance",
+    path: "skin.scars",
+    keywords: ["scar", "scars", "mark", "marks", "blemish"],
+    aliases: ["scars", "markings"],
+    description: "Scars and permanent marks on skin",
+  },
+  tattoos: {
+    column: "appearance",
+    path: "skin.tattoos",
+    keywords: ["tattoo", "tattoos", "ink", "design"],
+    aliases: ["tattoos", "body art"],
+    description: "Tattoos and body art",
+  },
+
+  // Body Parts - Detailed
+  breast_size: {
+    column: "appearance",
+    path: "body.chest.size",
+    keywords: ["breast", "chest", "bosom", "size", "big", "small", "medium"],
+    aliases: ["breast size", "chest size"],
+    description: "Size and shape of chest/breasts",
+  },
+  breast_shape: {
+    column: "appearance",
+    path: "body.chest.shape",
+    keywords: ["breast", "chest", "shape", "round", "perky", "full"],
+    aliases: ["breast shape"],
+    description: "Shape and appearance of breasts",
+  },
+  waist: {
+    column: "appearance",
+    path: "body.waist",
+    keywords: ["waist", "waistline", "hips", "curves", "narrow", "wide"],
+    aliases: ["waistline"],
+    description: "Waist and hip measurements",
+  },
+  legs: {
+    column: "appearance",
+    path: "body.legs",
+    keywords: ["legs", "thighs", "calves", "long", "short", "muscular"],
+    aliases: ["leg shape"],
+    description: "Leg shape and appearance",
+  },
+  arms: {
+    column: "appearance",
+    path: "body.arms",
+    keywords: ["arms", "biceps", "forearms", "muscular", "slender"],
+    aliases: ["arm shape"],
+    description: "Arm shape and muscle definition",
+  },
+
+  // Feet (Existing + Expanded)
+  feet_size: {
+    column: "appearance",
+    path: "feet.size",
+    keywords: ["feet", "foot", "size", "big", "small", "petite", "large"],
+    aliases: ["foot size"],
+    description: "Size of character feet",
+  },
+  feet_shape: {
+    column: "appearance",
+    path: "feet.shape",
+    keywords: ["feet", "foot", "shape", "arch", "wide", "narrow", "delicate"],
+    aliases: ["foot shape"],
+    description: "Shape and structure of feet",
+  },
+  feet_nails: {
+    column: "appearance",
+    path: "feet.nails",
+    keywords: ["feet", "foot", "nails", "toenails", "polish", "painted"],
+    aliases: ["toenails", "foot nails"],
+    description: "Toenail appearance and polish",
+  },
+
+  // Hands
+  hands: {
+    column: "appearance",
+    path: "body.hands",
+    keywords: ["hands", "fingers", "nails", "manicure", "calluses"],
+    aliases: ["hand shape"],
+    description: "Hand and finger appearance",
+  },
+  fingernails: {
+    column: "appearance",
+    path: "body.hands.nails",
+    keywords: ["nails", "fingernails", "manicure", "polish", "length"],
+    aliases: ["fingernails", "nail polish"],
+    description: "Fingernail appearance and polish",
+  },
+
+  // Voice and Speech
+  voice_pitch: {
+    column: "appearance",
+    path: "voice.pitch",
+    keywords: ["voice", "pitch", "high", "low", "deep", "soprano", "alto"],
+    aliases: ["voice pitch"],
+    description: "Pitch and tone of speaking voice",
+  },
+  voice_accent: {
+    column: "appearance",
+    path: "voice.accent",
+    keywords: ["voice", "accent", "dialect", "speech", "pronunciation"],
+    aliases: ["accent", "dialect"],
+    description: "Speech accent and dialect",
+  },
+  speech_pattern: {
+    column: "appearance",
+    path: "voice.speech_pattern",
+    keywords: ["speech", "speaking", "voice", "manner", "eloquent", "shy"],
+    aliases: ["speech pattern", "speaking style"],
+    description: "How character speaks and communicates",
+  },
+
+  // =============================================================================
+  // SCENTS AND AROMAS
+  // =============================================================================
+
+  // Body Scents
+  feet_scents: {
+    column: "scents_aromas",
+    path: "feet.scents",
+    keywords: ["feet", "foot", "smell", "scent", "odor", "aroma", "stinky", "musky"],
+    aliases: ["feet smell", "foot odor"],
+    description: "Natural scent of character feet",
+  },
+  feet_intensity: {
+    column: "scents_aromas",
+    path: "feet.intensity",
+    keywords: ["feet", "foot", "smell", "strong", "mild", "intense", "faint"],
+    aliases: ["feet smell intensity"],
+    description: "Intensity of feet scent",
+  },
+  body_scent: {
+    column: "scents_aromas",
+    path: "body.natural",
+    keywords: ["body", "smell", "scent", "natural", "musk", "pheromones"],
+    aliases: ["body odor", "natural scent"],
+    description: "Natural body scent and pheromones",
+  },
+  hair_scent: {
+    column: "scents_aromas",
+    path: "hair.scents",
+    keywords: ["hair", "shampoo", "scent", "fragrance", "smell"],
+    aliases: ["hair smell", "hair fragrance"],
+    description: "Scent of character hair and hair products",
+  },
+  perfume: {
+    column: "scents_aromas",
+    path: "body.perfume",
+    keywords: ["perfume", "cologne", "fragrance", "scent", "floral", "vanilla"],
+    aliases: ["fragrance", "cologne"],
+    description: "Applied perfumes and fragrances",
+  },
+  breath: {
+    column: "scents_aromas",
+    path: "breath",
+    keywords: ["breath", "mouth", "mint", "fresh", "morning"],
+    aliases: ["breath scent"],
+    description: "Scent of character breath",
+  },
+
+  // Intimate Scents (with appropriate content filtering)
+  intimate_scents: {
+    column: "scents_aromas",
+    path: "intimate.scents",
+    keywords: ["intimate", "private", "personal", "musk"],
+    aliases: ["personal scent"],
+    description: "Personal intimate scents",
+  },
+
+  // =============================================================================
+  // PERSONALITY TRAITS
+  // =============================================================================
+
+  // Core Personality
+  personality_traits: {
+    column: "personality",
+    path: "traits",
+    keywords: ["personality", "character", "shy", "outgoing", "kind", "mean", "funny"],
+    aliases: ["personality traits", "character traits"],
+    description: "Core personality characteristics",
+  },
+  temperament: {
+    column: "personality",
+    path: "temperament",
+    keywords: ["temperament", "mood", "disposition", "nature"],
+    aliases: ["disposition"],
+    description: "General temperament and disposition",
+  },
+  emotional_state: {
+    column: "personality",
+    path: "emotional_state",
+    keywords: ["feeling", "emotion", "mood", "happy", "sad", "angry", "excited"],
+    aliases: ["mood", "feelings", "emotional state"],
+    description: "Current emotional condition",
+  },
+  dominant_emotion: {
+    column: "personality",
+    path: "dominant_emotion",
+    keywords: ["emotion", "feeling", "usually", "typically", "generally"],
+    aliases: ["usual mood"],
+    description: "Most common emotional state",
+  },
+
+  // Behavioral Patterns
+  behavioral_patterns: {
+    column: "personality",
+    path: "behavioral_patterns",
+    keywords: ["behavior", "habits", "patterns", "usual", "typically", "always"],
+    aliases: ["behavior patterns", "habits"],
+    description: "Behavioral habits and patterns",
+  },
+  quirks: {
+    column: "personality",
+    path: "quirks",
+    keywords: ["quirk", "quirks", "habit", "peculiar", "unique", "odd"],
+    aliases: ["quirks", "odd habits"],
+    description: "Unique quirks and mannerisms",
+  },
+  fears: {
+    column: "personality",
+    path: "fears",
+    keywords: ["fear", "fears", "afraid", "scared", "phobia", "terrified"],
+    aliases: ["phobias", "afraid of"],
+    description: "Things character is afraid of",
+  },
+  desires: {
+    column: "personality",
+    path: "desires",
+    keywords: ["desire", "desires", "want", "wants", "wish", "dream"],
+    aliases: ["wants", "wishes"],
+    description: "Character desires and wants",
+  },
+  goals: {
+    column: "personality",
+    path: "goals",
+    keywords: ["goal", "goals", "ambition", "dream", "aspire", "hope"],
+    aliases: ["ambitions", "aspirations"],
+    description: "Character goals and ambitions",
+  },
+
+  // Values and Morality
+  moral_alignment: {
+    column: "personality",
+    path: "morality.alignment",
+    keywords: ["moral", "morality", "good", "evil", "neutral", "ethics"],
+    aliases: ["moral alignment", "ethics"],
+    description: "Moral alignment and ethical stance",
+  },
+  core_values: {
+    column: "personality",
+    path: "values",
+    keywords: ["values", "beliefs", "principles", "important", "stands for"],
+    aliases: ["beliefs", "principles"],
+    description: "Core values and beliefs",
+  },
+  virtues: {
+    column: "personality",
+    path: "virtues",
+    keywords: ["virtue", "virtues", "good", "positive", "strength"],
+    aliases: ["positive traits", "strengths"],
+    description: "Character virtues and positive traits",
+  },
+  vices: {
+    column: "personality",
+    path: "vices",
+    keywords: ["vice", "vices", "flaw", "flaws", "weakness", "bad"],
+    aliases: ["flaws", "weaknesses"],
+    description: "Character vices and negative traits",
+  },
+
+  // Intelligence and Skills
+  intelligence: {
+    column: "personality",
+    path: "intellect.level",
+    keywords: ["smart", "intelligent", "clever", "wise", "brilliant", "genius"],
+    aliases: ["intelligence level", "smarts"],
+    description: "Character intelligence level",
+  },
+  education: {
+    column: "personality",
+    path: "intellect.education",
+    keywords: ["education", "school", "university", "learning", "studied"],
+    aliases: ["educational background"],
+    description: "Educational background and learning",
+  },
+  skills: {
+    column: "personality",
+    path: "intellect.skills",
+    keywords: ["skill", "skills", "talent", "ability", "good at"],
+    aliases: ["talents", "abilities"],
+    description: "Character skills and talents",
+  },
+
+  // =============================================================================
+  // BACKGROUND AND SOCIAL
+  // =============================================================================
+
+  // Background
+  background: {
+    column: "background",
+    path: "",
+    keywords: ["background", "history", "past", "story", "origin", "grew up"],
+    aliases: ["personal history", "backstory"],
+    description: "Character background and personal history",
+  },
+  occupation: {
+    column: "background",
+    path: "occupation",
+    keywords: ["job", "work", "occupation", "career", "profession", "employed"],
+    aliases: ["job", "career", "profession"],
+    description: "Character profession or occupation",
+  },
+  family: {
+    column: "background",
+    path: "family",
+    keywords: ["family", "parents", "siblings", "mother", "father", "relatives"],
+    aliases: ["family background", "relatives"],
+    description: "Family background and relationships",
+  },
+  origin: {
+    column: "background",
+    path: "origin",
+    keywords: ["from", "origin", "birthplace", "hometown", "where", "born"],
+    aliases: ["birthplace", "hometown"],
+    description: "Character origin and birthplace",
+  },
+
+  // Current Status and Possessions
+  wealth: {
+    column: "background",
+    path: "wealth",
+    keywords: ["money", "rich", "poor", "wealthy", "broke", "income"],
+    aliases: ["financial status", "money"],
+    description: "Character wealth and financial status",
+  },
+  living_situation: {
+    column: "background",
+    path: "living_situation",
+    keywords: ["live", "lives", "home", "house", "apartment", "residence"],
+    aliases: ["home", "residence"],
+    description: "Where and how character lives",
+  },
+  possessions: {
+    column: "background",
+    path: "possessions",
+    keywords: ["owns", "has", "possession", "belongings", "stuff"],
+    aliases: ["belongings", "owns"],
+    description: "Important possessions and belongings",
+  },
+
+  // Relationships
+  relationships: {
+    column: "background",
+    path: "relationships",
+    keywords: ["relationship", "relationships", "friends", "enemies", "allies"],
+    aliases: ["social connections"],
+    description: "Character relationships with others",
+  },
+  romantic_status: {
+    column: "background",
+    path: "romantic_status",
+    keywords: [
+      "romantic",
+      "dating",
+      "married",
+      "single",
+      "relationship",
+      "boyfriend",
+      "girlfriend",
+    ],
+    aliases: ["relationship status", "dating"],
+    description: "Romantic relationship status",
+  },
+
+  // =============================================================================
+  // CLOTHING AND STYLE
+  // =============================================================================
+
+  clothing_style: {
+    column: "appearance",
+    path: "clothing.style",
+    keywords: ["clothing", "clothes", "style", "fashion", "dress", "outfit"],
+    aliases: ["fashion style", "dress style"],
+    description: "Character clothing and fashion style",
+  },
+  current_outfit: {
+    column: "appearance",
+    path: "clothing.current",
+    keywords: ["wearing", "dressed", "outfit", "clothes", "clothing"],
+    aliases: ["current outfit", "wearing"],
+    description: "Currently worn clothing and outfit",
+  },
+  accessories: {
+    column: "appearance",
+    path: "accessories",
+    keywords: ["accessories", "jewelry", "watch", "necklace", "earrings", "bracelet"],
+    aliases: ["jewelry", "accessories"],
+    description: "Worn accessories and jewelry",
+  },
+
+  // =============================================================================
+  // SPECIAL ABILITIES AND TRAITS
+  // =============================================================================
+
+  special_abilities: {
+    column: "personality",
+    path: "abilities.special",
+    keywords: ["ability", "abilities", "power", "powers", "magic", "special"],
+    aliases: ["powers", "special abilities"],
+    description: "Special abilities or supernatural powers",
+  },
+  weaknesses: {
+    column: "personality",
+    path: "weaknesses",
+    keywords: ["weakness", "weaknesses", "vulnerable", "weak", "limitation"],
+    aliases: ["vulnerabilities", "limitations"],
+    description: "Character weaknesses and vulnerabilities",
+  },
+  species: {
+    column: "appearance",
+    path: "species",
+    keywords: ["species", "race", "human", "elf", "dwarf", "creature", "being"],
+    aliases: ["race", "creature type"],
+    description: "Character species or race",
+  },
+} as const;
+
+// Type definitions for the schema
+export type AttributeKey = keyof typeof COMPREHENSIVE_ATTRIBUTE_SCHEMA;
+
+export interface AttributeSchema {
+  column: "appearance" | "scents_aromas" | "personality" | "background";
+  path: string;
+  keywords: string[];
+  aliases: string[];
+  description: string;
+}
+
+// Alias for backward compatibility
+export const ATTRIBUTE_SCHEMA = COMPREHENSIVE_ATTRIBUTE_SCHEMA;
+
+// Schema version for migration tracking
+export const SCHEMA_VERSION = "1.0.0";
+
+/**
+ * Get all possible paths for a given column
+ */
+export function getPathsForColumn(column: string): string[] {
+  return Object.values(COMPREHENSIVE_ATTRIBUTE_SCHEMA)
+    .filter((schema) => schema.column === column)
+    .map((schema) => schema.path)
+    .filter((path) => path.length > 0);
+}
+
+/**
+ * Get all keywords for natural language matching
+ */
+export function getAllKeywords(): string[] {
+  return Array.from(
+    new Set(
+      Object.values(COMPREHENSIVE_ATTRIBUTE_SCHEMA).flatMap((schema) => [
+        ...schema.keywords,
+        ...schema.aliases,
+      ])
+    )
+  );
+}
+
+/**
+ * Find attributes by keyword
+ */
+export function findAttributesByKeyword(keyword: string): AttributeKey[] {
+  const lowerKeyword = keyword.toLowerCase();
+  return Object.entries(COMPREHENSIVE_ATTRIBUTE_SCHEMA)
+    .filter(
+      ([_, schema]) =>
+        schema.keywords.some((k) => k.toLowerCase().includes(lowerKeyword)) ||
+        schema.aliases.some((a) => a.toLowerCase().includes(lowerKeyword))
+    )
+    .map(([key, _]) => key as AttributeKey);
+}

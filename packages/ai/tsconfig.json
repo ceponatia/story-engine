@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "removeComments": true,
+    "outDir": "../../dist/ai",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@story-engine/types": ["../../types/src"],
+      "@story-engine/postgres": ["../../postgres/src"],
+      "@story-engine/mongodb": ["../../mongodb/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

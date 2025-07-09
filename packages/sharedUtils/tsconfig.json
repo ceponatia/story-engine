@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "removeComments": true,
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "outDir": "../../dist/sharedUtils",
+    "composite": true,
+    "declaration": true,
+    "paths": {
+      "@story-engine/types": ["../../types/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"],
+  "references": [
+    { "path": "../types" }
+  ]
+}

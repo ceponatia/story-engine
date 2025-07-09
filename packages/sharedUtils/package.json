@@ -1,0 +1,33 @@
+{
+  "name": "@story-engine/sharedUtils",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared utilities, parsers, updaters, and infrastructure tools",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "pnpm -w exec tsc -b",
+    "dev": "pnpm -w exec tsc -b --watch",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "@story-engine/types": "workspace:*",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.6",
+    "eslint": "^9",
+    "eslint-plugin-unicorn": "^59.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1"
+  }
+}

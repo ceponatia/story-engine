@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/mongodb",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "removeComments": true,
+    "paths": {
+      "@story-engine/types": ["../../types/src"],
+      "@story-engine/validation": ["../../validation/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

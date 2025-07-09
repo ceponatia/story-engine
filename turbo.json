@@ -1,0 +1,79 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "stream",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "NODE_ENV",
+    "DATABASE_URL",
+    "REDIS_URL",
+    "MONGODB_URL",
+    "QDRANT_URL",
+    "BETTER_AUTH_SECRET",
+    "OLLAMA_BASE_URL",
+    "OLLAMA_MODEL",
+    "AI_ENABLED"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "dist/**", "lib/**", "*.tsbuildinfo", "!.next/cache/**"],
+      "persistent": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "outputs": [],
+      "persistent": false
+    },
+    "lint:fix": {
+      "outputs": [],
+      "persistent": false
+    },
+    "type-check": {
+      "outputs": [],
+      "persistent": false
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "persistent": false
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "cache": true,
+      "persistent": false
+    },
+    "test:all": {
+      "dependsOn": ["test", "type-check", "lint"],
+      "outputs": [],
+      "persistent": false
+    },
+    "format": {
+      "outputs": [],
+      "persistent": false
+    },
+    "format:check": {
+      "outputs": [],
+      "persistent": false
+    },
+    "worker:start": {
+      "cache": false,
+      "persistent": true
+    },
+    "worker:dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

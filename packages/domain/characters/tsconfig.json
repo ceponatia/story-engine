@@ -1,0 +1,23 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/domain/characters",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "removeComments": true,
+    "paths": {
+      "@story-engine/types": ["../../types/src"],
+      "@story-engine/validation": ["../../validation/src"],
+      "@story-engine/postgres": ["../../postgres/src"],
+      "@story-engine/mongodb": ["../../mongodb/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../../types" },
+    { "path": "../../validation" },
+    { "path": "../../postgres" },
+    { "path": "../../mongodb" }
+  ]
+}

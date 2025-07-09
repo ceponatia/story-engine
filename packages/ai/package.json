@@ -1,0 +1,31 @@
+{
+  "name": "@story-engine/ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI services including LLM integration, embeddings, and prompt templates",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "pnpm -w exec tsc -b",
+    "dev": "pnpm -w exec tsc -b --watch",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "@story-engine/types": "workspace:*",
+    "@story-engine/postgres": "workspace:*",
+    "@story-engine/mongodb": "workspace:*",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.6"
+  }
+}

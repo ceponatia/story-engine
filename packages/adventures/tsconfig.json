@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "removeComments": true,
+    "outDir": "../../dist/adventures",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@story-engine/types": ["../../types/src"],
+      "@story-engine/validation": ["../../validation/src"],
+      "@story-engine/postgres": ["../../postgres/src"],
+      "@story-engine/characters": ["../../characters/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

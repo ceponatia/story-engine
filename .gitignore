@@ -137,3 +137,4 @@ dist
 
 # Utilities folder (development-only files)
 utilities/
+/dist/

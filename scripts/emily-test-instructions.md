@@ -5,23 +5,27 @@
 All recommended improvements have been successfully implemented:
 
 ### ✅ **Enhanced Romance System Prompt**
+
 - **Critical Rules Section**: Added 5 strict rules to prevent Emily from speaking for the user
 - **Response Format Guidelines**: Explicit instructions for using asterisks and dialogue formatting
 - **Length Limits**: Clear instruction to limit responses to 1-2 paragraphs maximum
 - **User Agency Protection**: Multiple safeguards to preserve user autonomy
 
 ### ✅ **Response Validation System**
+
 - **Automated Formatting**: Converts action patterns to asterisk format automatically
 - **User Speech Removal**: Strips any attempts to speak for the user
 - **Length Truncation**: Automatically limits responses to 2 paragraphs
 - **Ending Markers**: Adds appropriate waiting cues when missing
 
 ### ✅ **Mistral-Specific Optimizations**
+
 - **Token Limits**: Reduced from 500 to 200 tokens for romance adventures
 - **Stop Sequences**: Enhanced stop patterns to prevent user speech
 - **Temperature Control**: Maintained at 0.7 for creative but controlled responses
 
 ### ✅ **Configuration System**
+
 - **Adventure Type Support**: Different configs for romance vs action vs general
 - **Flexible Parameters**: Easily adjustable validation rules
 - **Character-Aware**: Pronoun selection based on character name/gender
@@ -31,6 +35,7 @@ All recommended improvements have been successfully implemented:
 ## 🧪 Manual Testing Instructions
 
 ### **Step 1: Access Emily Adventure**
+
 1. Start the development server: `npm run dev`
 2. Navigate to `http://localhost:3000`
 3. Log in with test credentials:
@@ -41,48 +46,55 @@ All recommended improvements have been successfully implemented:
 ### **Step 2: Test Response Controls**
 
 #### **Test A: Response Length**
+
 - **Input**: "Tell me about your day in great detail"
 - **Expected**: Emily responds in exactly 1-2 paragraphs, no more
 - **Before**: Emily might write 4+ long paragraphs
 - **After**: Response automatically truncated to 2 paragraphs maximum
 
 #### **Test B: Asterisk Formatting**
+
 - **Input**: "What are you thinking right now?"
-- **Expected**: Emily's thoughts and actions in *asterisks*
+- **Expected**: Emily's thoughts and actions in _asterisks_
 - **Example**: `*She felt her heart racing as she considered his question.*`
 
 #### **Test C: User Agency Protection**
+
 - **Input**: "I'm feeling confused about something"
 - **Expected**: Emily NEVER writes what you say next
 - **Before**: Emily might write: `You nod and say "I understand"`
 - **After**: Emily only responds as herself and waits for your input
 
 #### **Test D: Proper Dialogue Format**
+
 - **Expected Format**:
+
   ```
   "I understand how you're feeling," Emily said softly.
-  
+
   *She reached out to gently touch your hand, her green eyes filled with concern.*
   ```
 
 ### **Step 3: Verification Checklist**
 
 ✅ **Response Length**: 1-2 paragraphs maximum  
-✅ **Asterisk Usage**: All actions/thoughts in *asterisks*  
+✅ **Asterisk Usage**: All actions/thoughts in _asterisks_  
 ✅ **No User Speech**: Emily never writes what you say/do  
 ✅ **Proper Dialogue**: Emily's words in quotes  
-✅ **Waiting Cues**: Responses end with Emily waiting for your input  
+✅ **Waiting Cues**: Responses end with Emily waiting for your input
 
 ---
 
 ## 🔧 Technical Validation
 
 ### **Files Modified**:
+
 1. **`/lib/prompts/templates.ts`** - Enhanced romance template
 2. **`/app/actions/llm.ts`** - Response validation and formatting
 3. **`/lib/config/response-validation.ts`** - New configuration system
 
 ### **Key Improvements**:
+
 ```typescript
 // Enhanced Romance Template
 CRITICAL RULES - FOLLOW EXACTLY:
@@ -110,15 +122,17 @@ formatted = formatted.replace(actionPattern, (match) => {
 ## 🎉 Expected Results
 
 **Before Implementation**:
+
 - Emily wrote extremely long responses (3-5+ paragraphs)
 - Emily frequently spoke for the user
 - Inconsistent formatting without asterisks
 - Poor conversation flow control
 
 **After Implementation**:
+
 - Emily writes exactly 1-2 well-formatted paragraphs
 - Emily NEVER speaks for the user
-- All actions/thoughts properly formatted with *asterisks*
+- All actions/thoughts properly formatted with _asterisks_
 - Clear conversation boundaries with waiting cues
 - Better romantic tension and character agency
 

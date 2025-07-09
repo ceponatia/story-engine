@@ -14,7 +14,7 @@ startCommand:
         description: "Your Supabase project URL"
         default: ""
       supabaseKey:
-        type: "string" 
+        type: "string"
         title: "Supabase Anon Key"
         description: "Your Supabase anonymous key"
         default: ""

@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "removeComments": true,
+    "outDir": "../../dist/types",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "composite": true,
+    "paths": {
+      "@validation/*": ["../validation/src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

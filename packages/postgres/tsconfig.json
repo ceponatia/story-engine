@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "removeComments": true,
+    "outDir": "../../dist/postgres",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@story-engine/types": ["../../types/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

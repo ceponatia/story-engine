@@ -1,0 +1,55 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "removeComments": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@/components/ui": [
+        "./components/ui"
+      ],
+      "@/components/character": [
+        "./components/character"
+      ],
+      "@types/*": [
+        "../../packages/types/*"
+      ],
+      "@validation/*": [
+        "../../packages/validation/*"
+      ],
+      "@story-engine/*": [
+        "../../packages/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "references": [
+    { "path": "../../packages/types" },
+    { "path": "../../packages/validation" },
+    { "path": "../../packages/postgres" },
+    { "path": "../../packages/mongodb" },
+    { "path": "../../packages/redis" },
+    { "path": "../../packages/qdrant" },
+    { "path": "../../packages/adventures" },
+    { "path": "../../packages/ai" },
+    { "path": "../../packages/auth" },
+    { "path": "../../packages/domain/characters" },
+    { "path": "../../packages/world" },
+    { "path": "../../packages/sharedUtils" }
+  ]
+}
