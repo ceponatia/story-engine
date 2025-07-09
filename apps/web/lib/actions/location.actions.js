@@ -1,8 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { MongoLocationRepository } from "@/lib/mongodb/location.repository";
-import { requireAuth } from "@/lib/auth-helper";
+import { MongoLocationRepository } from "@story-engine/mongodb";
+import { requireAuth } from "@story-engine/auth";
 const locationRepository = new MongoLocationRepository();
 export async function getLocationsAction() {
     const { user } = await requireAuth();

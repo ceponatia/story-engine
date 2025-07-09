@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Character, Location, Setting } from "@/lib/postgres/types";
+import { Character, Location, Setting } from "@story-engine/types";
 
 interface NewAdventureFormProps {
   characters: Character[];

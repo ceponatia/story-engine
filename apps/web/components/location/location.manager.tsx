@@ -19,7 +19,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Edit3, Plus, Save, X, Eye, Tag } from "lucide-react";
 import { createLocationAction, updateLocationAction } from "@/lib/actions/location-actions";
-import { Location } from "@/lib/postgres/types";
+import { Location } from "@story-engine/types";
 
 // Form validation schema
 const locationFormSchema = z.object({

@@ -1,8 +1,8 @@
 "use server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { getUserAdventureTypes, createUserAdventureType, updateUserAdventureType, deleteUserAdventureType, getPublicAdventureTypes, } from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
+import { getUserAdventureTypes, createUserAdventureType, updateUserAdventureType, deleteUserAdventureType, getPublicAdventureTypes, } from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
 export async function createAdventureType(formData) {
     const { user } = await requireAuth();
     const name = formData.get("name");

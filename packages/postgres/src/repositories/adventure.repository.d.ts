@@ -1,4 +1,4 @@
-import { Adventure, Persona } from "../types";
+import { Adventure, Persona } from "@story-engine/types";
 import { PoolClient } from "pg";
 export interface AdventureRepository {
     getByUser(userId: string): Promise<(Adventure & {

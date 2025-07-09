@@ -1,4 +1,4 @@
-import { PersonaFormData } from "@/lib/postgres/types";
+import type { PersonaFormData } from "@story-engine/types";
 export declare function getPersonasAction(): Promise<any>;
 export declare function getPersonaAction(id: string): Promise<any>;
 export declare function createPersonaAction(data: PersonaFormData): Promise<any>;

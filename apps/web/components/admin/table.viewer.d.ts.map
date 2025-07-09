@@ -1,0 +1,1 @@
+{"version":3,"file":"table.viewer.d.ts","sourceRoot":"","sources":["table.viewer.tsx"],"names":[],"mappings":"AAKA,OAAO,EAAE,SAAS,EAAiC,MAAM,qBAAqB,CAAC;AAwB/E,UAAU,gBAAgB;IACxB,SAAS,EAAE,MAAM,CAAC;IAClB,IAAI,EAAE,SAAS,CAAC;IAChB,SAAS,EAAE,MAAM,IAAI,CAAC;CACvB;AAED,wBAAgB,WAAW,CAAC,EAAE,SAAS,EAAE,IAAI,EAAE,SAAS,EAAE,EAAE,gBAAgB,+BAgW3E"}

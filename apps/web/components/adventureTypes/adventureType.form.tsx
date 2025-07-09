@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createAdventureType, updateAdventureType } from "@/lib/actions/user-adventure-types";
-import type { UserAdventureType } from "@/lib/postgres/types";
+import type { UserAdventureType } from "@story-engine/types";
 
 interface AdventureTypeFormProps {
   adventureType?: UserAdventureType;

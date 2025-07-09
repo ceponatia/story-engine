@@ -1,7 +1,7 @@
 import { UnifiedLocationManager } from "@/components/locations/unified-location-manager";
 import { LibraryBreadcrumbs } from "@/components/navigation/library-breadcrumbs";
 import { getLocationAction } from "@/lib/actions/location-actions";
-import { requireAuth } from "@/lib/auth-helper";
+import { requireAuth } from "@story-engine/auth";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

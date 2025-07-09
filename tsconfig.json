@@ -33,7 +33,6 @@
       "@story-engine/auth": ["packages/auth/src"],
       "@story-engine/domain-characters": ["packages/domain/characters/src"],
       "@story-engine/world": ["packages/world/src"],
-      "@story-engine/sharedUtils": ["packages/sharedUtils/src"],
       "@story-engine/utils": ["packages/utils/src"],
       "@/*": ["apps/web/*"]
     }
@@ -53,7 +52,6 @@
     { "path": "./packages/auth" },
     { "path": "./packages/domain/characters" },
     { "path": "./packages/world" },
-    { "path": "./packages/sharedUtils" },
     { "path": "./packages/utils" }
   ]
 }

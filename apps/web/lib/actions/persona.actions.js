@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { personaRepository } from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
+import { personaRepository } from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
 export async function getPersonasAction() {
     const { user } = await requireAuth();
     return await personaRepository.getByUser(user.id);

@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { MongoLocationRepository } from "@/lib/mongodb/location.repository";
-import { requireAuth } from "@/lib/auth-helper";
-import { LocationFormData } from "@/lib/postgres/types";
+import { MongoLocationRepository } from "@story-engine/mongodb";
+import { requireAuth } from "@story-engine/auth";
+import type { LocationFormData } from "@story-engine/types";
 
 // Create MongoDB repository instance
 const locationRepository = new MongoLocationRepository();

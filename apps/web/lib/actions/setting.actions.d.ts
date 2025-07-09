@@ -1,5 +1,5 @@
-import { SettingFormData } from "@/lib/postgres/types";
-export declare function getSettingsAction(): Promise<any>;
+import type { SettingFormData } from "@story-engine/types";
+export declare function getSettingsAction(): Promise<Setting[]>;
 export declare function getSettingAction(id: string): Promise<any>;
 export declare function createSettingAction(data: SettingFormData): Promise<void>;
 export declare function updateSettingAction(id: string, data: SettingFormData): Promise<any>;

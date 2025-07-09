@@ -1,11 +1,7 @@
 import { getMongoConnection } from "../connection";
 import { Character, CharacterFormData } from "@story-engine/types/entities";
 import { CharacterDocument, IMongoCharacterRepository } from "@story-engine/types/mongodb";
-import {
-  parseAppearanceText,
-  parsePersonalityText,
-  parseScentsText,
-} from "@story-engine/sharedUtils";
+import { parseAppearanceText, parsePersonalityText, parseScentsText } from "@story-engine/utils";
 import { parseTagsFromString, BaseRepositoryImpl } from "@story-engine/utils";
 import { ObjectId } from "mongodb";
 

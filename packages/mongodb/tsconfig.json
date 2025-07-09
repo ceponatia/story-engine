@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "../../dist/mongodb",
     "rootDir": "./src",
     "baseUrl": "./src",

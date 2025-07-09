@@ -1,8 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { MongoSettingRepository } from "@/lib/mongodb/setting.repository";
-import { requireAuth } from "@/lib/auth-helper";
+import { MongoSettingRepository } from "@story-engine/mongodb";
+import { requireAuth } from "@story-engine/auth";
 const settingRepository = new MongoSettingRepository();
 export async function getSettingsAction() {
     const { user } = await requireAuth();

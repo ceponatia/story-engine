@@ -1,6 +1,6 @@
-import { requireAuth } from "@/lib/auth-helper";
-import { getUserAdventureTypes, getPublicAdventureTypes } from "@/lib/postgres/repositories";
-import type { UserAdventureType } from "@/lib/postgres/types";
+import { requireAuth } from "@story-engine/auth";
+import { getUserAdventureTypes, getPublicAdventureTypes } from "@story-engine/postgres";
+import type { UserAdventureType } from "@story-engine/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

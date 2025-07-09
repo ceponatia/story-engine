@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { MongoSettingRepository } from "@/lib/mongodb/setting.repository";
-import { requireAuth } from "@/lib/auth-helper";
-import { SettingFormData } from "@/lib/postgres/types";
+import { MongoSettingRepository } from "@story-engine/mongodb";
+import { requireAuth } from "@story-engine/auth";
+import type { SettingFormData } from "@story-engine/types";
 
 // Create MongoDB repository instance
 const settingRepository = new MongoSettingRepository();

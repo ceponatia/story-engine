@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Edit3, Plus, Save, X, Eye } from "lucide-react";
-import { Setting } from "@/lib/postgres/types";
+import { Setting } from "@story-engine/types";
 import { UnifiedSettingForm } from "./unified-setting-form";
 
 interface User {

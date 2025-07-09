@@ -1,0 +1,1 @@
+{"version":3,"file":"dashboard.content.d.ts","sourceRoot":"","sources":["dashboard.content.tsx"],"names":[],"mappings":"AASA,UAAU,qBAAqB;IAC7B,IAAI,EAAE;QACJ,EAAE,EAAE,MAAM,CAAC;QACX,KAAK,EAAE,MAAM,CAAC;QACd,IAAI,CAAC,EAAE,MAAM,CAAC;QACd,KAAK,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;KACvB,CAAC;CACH;AAED,wBAAgB,gBAAgB,CAAC,EAAE,IAAI,EAAE,EAAE,qBAAqB,+BAyE/D"}

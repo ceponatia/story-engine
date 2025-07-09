@@ -49,7 +49,6 @@
     { "path": "../../packages/ai" },
     { "path": "../../packages/auth" },
     { "path": "../../packages/domain/characters" },
-    { "path": "../../packages/world" },
-    { "path": "../../packages/sharedUtils" }
+    { "path": "../../packages/world" }
   ]
 }

@@ -1,0 +1,1 @@
+{"version":3,"file":"persona.section.d.ts","sourceRoot":"","sources":["persona.section.tsx"],"names":[],"mappings":"AAUA,UAAU,IAAI;IACZ,EAAE,EAAE,MAAM,CAAC;IACX,KAAK,CAAC,EAAE,MAAM,CAAC;IACf,IAAI,CAAC,EAAE,MAAM,CAAC;CACf;AAED,UAAU,mBAAmB;IAC3B,IAAI,CAAC,EAAE,IAAI,CAAC;CACb;AAED,wBAAgB,cAAc,CAAC,EAAE,IAAI,EAAE,EAAE,mBAAmB,+BAmL3D"}

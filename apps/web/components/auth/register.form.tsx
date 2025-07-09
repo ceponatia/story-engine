@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { signUp } from "@/lib/auth-client";
+import { signUp } from "@story-engine/auth";
 import Link from "next/link";
 
 const registerSchema = z

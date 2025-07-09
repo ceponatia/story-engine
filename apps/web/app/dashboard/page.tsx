@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
+import { auth } from "@story-engine/auth";
 import { headers } from "next/headers";
 import { DashboardContent } from "@/components/dashboard/dashboard-content";
 

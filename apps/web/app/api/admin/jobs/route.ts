@@ -6,9 +6,9 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { getJobStats, cleanupOldJobs, getNextPendingJob } from "@/lib/postgres/repositories";
+import { getJobStats, cleanupOldJobs, getNextPendingJob } from "@story-engine/postgres";
 import { createEmbeddingWorker } from "@/lib/ai/background-worker";
-import { requireAuth } from "@/lib/auth-helper";
+import { requireAuth } from "@story-engine/auth";
 
 // Global worker instance for API route management
 interface WorkerInstance {

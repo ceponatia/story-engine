@@ -8,7 +8,7 @@ import { Plus, FileX } from "lucide-react";
 import { getCharactersAction } from "@/lib/actions/character-actions";
 import { getLocationsAction } from "@/lib/actions/location-actions";
 import { getSettingsAction } from "@/lib/actions/setting-actions";
-import { Character, Location, Setting } from "@/lib/postgres/types";
+import { Character, Location, Setting } from "@story-engine/types";
 
 const typeDisplayNames: Record<string, string> = {
   characters: "Characters",

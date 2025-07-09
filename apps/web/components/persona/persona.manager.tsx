@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Persona } from "@/lib/postgres/types";
+import { Persona } from "@story-engine/types";
 import { UnifiedPersonaForm } from "./unified-persona-form";
 import { Button } from "@/components/ui/button";
 import { Edit, Save, X, Trash2 } from "lucide-react";

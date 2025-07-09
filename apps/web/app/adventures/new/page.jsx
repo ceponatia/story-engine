@@ -1,6 +1,6 @@
 import { NewAdventureForm } from "@/components/adventures/new-adventure-form";
-import { getCharactersByUser, getLocationsByUser, getSettingsByUser, } from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
+import { getCharactersByUser, getLocationsByUser, getSettingsByUser, } from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
 export default async function NewAdventurePage() {
     try {
         const { user } = await requireAuth();

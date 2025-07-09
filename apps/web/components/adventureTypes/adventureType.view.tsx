@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Copy, Globe, Lock, Trash2, Edit } from "lucide-react";
 import { deleteAdventureType } from "@/lib/actions/user-adventure-types";
 import Link from "next/link";
-import type { UserAdventureType } from "@/lib/postgres/types";
+import type { UserAdventureType } from "@story-engine/types";
 
 interface AdventureTypeViewProps {
   adventureType: UserAdventureType;

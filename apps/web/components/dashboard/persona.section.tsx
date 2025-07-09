@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Plus, Edit, Trash2 } from "lucide-react";
-import { Persona } from "@/lib/postgres/types";
+import { Persona } from "@story-engine/types";
 import { getPersonasAction } from "@/lib/actions/persona-actions";
 import { UnifiedPersonaManager } from "@/components/personas/unified-persona-manager";
 

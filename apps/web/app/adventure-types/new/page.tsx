@@ -1,4 +1,4 @@
-import { requireAuth } from "@/lib/auth-helper";
+import { requireAuth } from "@story-engine/auth";
 import { AdventureTypeForm } from "@/components/adventure-types/adventure-type-form";
 
 export default async function NewAdventureTypePage() {

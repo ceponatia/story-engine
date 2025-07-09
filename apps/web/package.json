@@ -33,7 +33,6 @@
     "@story-engine/postgres": "workspace:*",
     "@story-engine/qdrant": "workspace:*",
     "@story-engine/redis": "workspace:*",
-    "@story-engine/sharedUtils": "workspace:*",
     "@story-engine/types": "workspace:*",
     "@story-engine/validation": "workspace:*",
     "@story-engine/world": "workspace:*",

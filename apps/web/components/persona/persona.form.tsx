@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createPersonaAction, updatePersonaAction } from "@/lib/actions/persona-actions";
-import { Persona } from "@/lib/postgres/types";
+import { Persona } from "@story-engine/types";
 import { cn } from "@/lib/utils";
 import { Save } from "lucide-react";
 

@@ -8,9 +8,9 @@ import {
   updateUserAdventureType,
   deleteUserAdventureType,
   getPublicAdventureTypes,
-} from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
-import type { UserAdventureTypeFormData } from "@/lib/postgres/types";
+} from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
+import type { UserAdventureTypeFormData } from "@story-engine/types";
 
 export async function createAdventureType(formData: FormData) {
   const { user } = await requireAuth();

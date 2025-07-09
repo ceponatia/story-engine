@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Character } from "@/lib/postgres/types";
+import { Character } from "@story-engine/types";
 import { UnifiedCharacterForm } from "./unified-character-form";
 import { Button } from "@/components/ui/button";
 import { Edit, Save, X } from "lucide-react";

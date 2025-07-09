@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { personaRepository } from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
-import { PersonaFormData } from "@/lib/postgres/types";
+import { personaRepository } from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
+import type { PersonaFormData } from "@story-engine/types";
 
 export async function getPersonasAction() {
   const { user } = await requireAuth();

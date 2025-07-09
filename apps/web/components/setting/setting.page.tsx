@@ -1,7 +1,7 @@
 import { LibraryBreadcrumbs } from "@/components/navigation/library-breadcrumbs";
 import { getSettingAction } from "@/lib/actions/setting-actions";
 import { getCurrentUserAction } from "@/lib/actions/user-actions";
-import { Setting } from "@/lib/postgres/types";
+import { Setting } from "@story-engine/types";
 import { UnifiedSettingManager } from "./unified-setting-manager";
 
 export async function UnifiedSettingPage({ id }: { id: string }) {

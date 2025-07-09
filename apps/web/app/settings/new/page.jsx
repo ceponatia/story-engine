@@ -1,6 +1,6 @@
 import { UnifiedSettingManager } from "@/components/settings/unified-setting-manager";
 import { LibraryBreadcrumbs } from "@/components/navigation/library-breadcrumbs";
-import { requireAuth } from "@/lib/auth-helper";
+import { requireAuth } from "@story-engine/auth";
 export default async function Page() {
     const { user } = await requireAuth();
     return (<div className="container mx-auto px-4 py-6">

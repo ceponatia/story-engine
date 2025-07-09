@@ -1,7 +1,7 @@
 import { AdventureChat } from "@/components/adventures/adventure-chat";
 import { redirect } from "next/navigation";
-import { getAdventureById, getAdventureMessages } from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
+import { getAdventureById, getAdventureMessages } from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
 export default async function AdventureChatPage({ params }) {
     const resolvedParams = await params;
     try {

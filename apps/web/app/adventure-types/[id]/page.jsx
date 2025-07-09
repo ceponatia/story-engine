@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { requireAuth } from "@/lib/auth-helper";
-import { getUserAdventureTypeById } from "@/lib/postgres/repositories";
+import { requireAuth } from "@story-engine/auth";
+import { getUserAdventureTypeById } from "@story-engine/postgres";
 import { AdventureTypeForm } from "@/components/adventure-types/adventure-type-form";
 import { AdventureTypeView } from "@/components/adventure-types/adventure-type-view";
 export default async function AdventureTypePage({ params }) {

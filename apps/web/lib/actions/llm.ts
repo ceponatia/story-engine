@@ -2,18 +2,18 @@
 
 import { isAIAvailable } from "@/lib/config/validation";
 import { buildCharacterContext } from "./character-state";
-import { templateRegistry } from "@/lib/prompts/registry";
+import { templateRegistry } from "@story-engine/ai";
 import {
   getAdventureById,
   getAdventureMessages,
   createAdventureMessage,
-} from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
+} from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
 import { getValidationConfigWithUser } from "@/lib/config/response-validation";
 import { ValidatedLLMService } from "@/lib/validation/validated-llm-service";
-import { enhanceSystemPromptWithTraits, shouldEnhancePrompt } from "@/lib/ai/prompt-enhancement";
-import type { ConversationContext } from "@/lib/ai/functions/context-analyzer";
-import { RedisManager } from "@/lib/postgres/redis";
+import { enhanceSystemPromptWithTraits, shouldEnhancePrompt } from "@story-engine/ai";
+import type { ConversationContext } from "@story-engine/ai";
+import { RedisManager } from "@story-engine/redis";
 
 /**
  * Main LLM Response Generation Service
@@ -287,7 +287,7 @@ export async function generateLLMResponse(adventureId: string, userMessage: stri
     // - Action: conservative extraction (performance focus)
     // - General: conservative extraction (stability focus)
     try {
-      const { processLLMResponse, getAutomatedStateConfig } = await import("@/lib/ai/functions");
+      const { processLLMResponse, getAutomatedStateConfig } = await import("@story-engine/ai");
       const stateConfig = getAutomatedStateConfig(adventure.type || "general");
 
       if (

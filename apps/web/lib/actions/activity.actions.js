@@ -1,8 +1,6 @@
 "use server";
-import { adventureRepository } from "@/lib/postgres/repositories";
-import { MongoCharacterRepository } from "@/lib/mongodb/character.repository";
-import { MongoSettingRepository } from "@/lib/mongodb/setting.repository";
-import { MongoLocationRepository } from "@/lib/mongodb/location.repository";
+import { adventureRepository } from "@story-engine/postgres";
+import { MongoCharacterRepository, MongoSettingRepository, MongoLocationRepository, } from "@story-engine/mongodb";
 const characterRepository = new MongoCharacterRepository();
 const settingRepository = new MongoSettingRepository();
 const locationRepository = new MongoLocationRepository();

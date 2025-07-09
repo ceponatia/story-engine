@@ -3,8 +3,8 @@ import {
   getCharactersByUser,
   getLocationsByUser,
   getSettingsByUser,
-} from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
+} from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
 
 export default async function NewAdventurePage() {
   try {

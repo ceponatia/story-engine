@@ -15,7 +15,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { createSettingAction, updateSettingAction } from "@/lib/actions/setting-actions";
-import { Setting } from "@/lib/postgres/types";
+import { Setting } from "@story-engine/types";
 import { cn } from "@/lib/utils";
 import { Save } from "lucide-react";
 

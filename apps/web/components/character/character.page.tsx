@@ -1,7 +1,7 @@
 import { LibraryBreadcrumbs } from "@/components/navigation/library-breadcrumbs";
 import { getCharacterAction } from "@/lib/actions/character-actions";
 import { getCurrentUserAction } from "@/lib/actions/user-actions";
-import { Character } from "@/lib/postgres/types";
+import { Character } from "@story-engine/types";
 import { UnifiedCharacterManager } from "./unified-character-manager";
 
 interface UnifiedCharacterPageProps {

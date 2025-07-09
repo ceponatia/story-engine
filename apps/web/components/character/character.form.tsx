@@ -16,7 +16,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { createCharacterAction, updateCharacterAction } from "@/lib/actions/character.actions";
-import { Character, CharacterFormData } from "@/lib/postgres/types";
+import type { Character, CharacterFormData } from "@story-engine/types";
 import { attributeToText } from "@story-engine/domain/characters";
 import { characterCreateSchema, characterUpdateSchema } from "@story-engine/validation";
 import { cn } from "@/lib/utils";

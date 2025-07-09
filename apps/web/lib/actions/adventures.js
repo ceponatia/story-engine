@@ -1,10 +1,10 @@
 "use server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { adventureRepository, adventureCharacterRepository, adventureMessageRepository, characterRepository, } from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
-import { buildSystemPrompt } from "@/lib/prompts/index";
-import { buildOptimizedSystemPrompt } from "@/lib/prompts/optimized-templates";
+import { adventureRepository, adventureCharacterRepository, adventureMessageRepository, characterRepository, } from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
+import { buildSystemPrompt } from "@story-engine/ai";
+import { buildOptimizedSystemPrompt } from "@story-engine/ai";
 import { getAIConfig } from "@/lib/config/validation";
 export async function createAdventure(formData) {
     const { user } = await requireAuth();

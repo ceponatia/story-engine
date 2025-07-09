@@ -1,6 +1,6 @@
 import { AdventuresList } from "@/components/adventures/adventures-list";
-import { getAdventuresByUser } from "@/lib/postgres/repositories";
-import { requireAuth } from "@/lib/auth-helper";
+import { getAdventuresByUser } from "@story-engine/postgres";
+import { requireAuth } from "@story-engine/auth";
 export default async function ContinueAdventurePage() {
     try {
         const { user } = await requireAuth();
