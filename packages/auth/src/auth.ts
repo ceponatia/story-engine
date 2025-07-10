@@ -1,5 +1,4 @@
 import { betterAuth } from "better-auth";
-import { nextCookies } from "better-auth/adapters/next-js";
 import { getDatabase } from "@story-engine/postgres";
 
 // Better Auth configuration following official best practices
@@ -34,9 +33,8 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     maxPasswordLength: 128,
   },
-  plugins: [
-    nextCookies(), // Handle cookies for Next.js server actions
-  ],
+  // Note: nextCookies plugin not available in this version of better-auth
+  // Cookie handling is done automatically in v0.7.5
 });
 
 // Types are inferred from Better Auth automatically

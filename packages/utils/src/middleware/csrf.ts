@@ -11,7 +11,7 @@ export function withCsrfCookie(response: NextResponse): NextResponse {
   const token = generateCsrfToken();
   response.cookies.set(CSRF_COOKIE_NAME, token, {
     httpOnly: true,
-    sameSite: "Lax",
+    sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
   });
@@ -28,7 +28,7 @@ export function verifyCsrfToken(req: NextRequest): boolean {
 
   // Use constant-time comparison to prevent timing attacks
   try {
-    const cookieValue = cookie.value || cookie;
+    const cookieValue = typeof cookie === 'string' ? cookie : cookie.value;
     return crypto.timingSafeEqual(Buffer.from(cookieValue, "utf8"), Buffer.from(header, "utf8"));
   } catch (error) {
     // If buffers are different lengths, timingSafeEqual throws

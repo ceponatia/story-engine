@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAuth, requireAdminAuth } from "@story-engine/auth";
+import { requireAuth, requireAdminAuth } from "./authHelper";
 
 /**
  * Middleware to require authentication

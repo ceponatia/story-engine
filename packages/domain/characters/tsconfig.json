@@ -1,6 +1,7 @@
 {
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "../../../dist/domain/characters",
     "rootDir": "./src",
     "baseUrl": "./src",

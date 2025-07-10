@@ -13,7 +13,7 @@ export function rateLimitByIP(options: RateLimiterOptions) {
   const { windowMs, max, keyPrefix = 'ratelimit' } = options;
 
   return async function middleware(req: NextRequest) {
-    const ip = req.headers.get('x-forwarded-for') || req.ip || 'unknown';
+    const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
     const key = `${keyPrefix}:${ip}`;
     const now = Date.now();
     const expire = windowMs / 1000;
