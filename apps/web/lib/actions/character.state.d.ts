@@ -15,11 +15,11 @@ export declare function updateCharacterState(adventureId: string, updates: Recor
 export declare function getCharacterState(adventureId: string): Promise<{
     success: boolean;
     character: {
-        state_updates: any;
+        state_updates: {};
         name: string;
         personality: string;
         background: string;
-        user_id: any;
+        user_id: string;
         appearance: string;
         fragrances: string;
     };

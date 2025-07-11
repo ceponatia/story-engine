@@ -13,8 +13,8 @@
     }
   },
   "scripts": {
-    "build": "pnpm -w exec tsc -b",
-    "dev": "pnpm -w exec tsc -b --watch",
+    "build": "tsc -b",
+    "dev": "tsc -b --watch",
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts"
   },
@@ -22,10 +22,7 @@
     "@story-engine/types": "workspace:*",
     "@story-engine/mongodb": "workspace:*",
     "next": "^15.0.0",
-    "zod": "^3.22.4"
+    "zod": "^3.25.67"
   },
-  "devDependencies": {
-    "typescript": "^5.3.3",
-    "@types/node": "^20.10.6"
-  }
+  "devDependencies": {}
 }

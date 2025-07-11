@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, } from "@/components/ui/alert-dialog";
 import { createCharacterAction, updateCharacterAction } from "@/lib/actions/character.actions";
-import { attributeToText } from "@story-engine/domain/characters";
+import { attributeToText } from "@story-engine/domain-characters";
 import { characterCreateSchema, characterUpdateSchema } from "@story-engine/validation";
 import { cn } from "@/lib/utils";
 import { Save } from "lucide-react";

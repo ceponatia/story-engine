@@ -13,8 +13,9 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
-// Load environment variables from .env.local
-require("dotenv").config({ path: ".env.local" });
+// Load environment variables using shared utility
+const { loadEnv } = require("../packages/utils/src/loadEnv.js");
+loadEnv();
 
 // ANSI color codes for console output
 const colors = {

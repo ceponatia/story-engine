@@ -6,18 +6,12 @@
  */
 
 // TODO: Replace with PostgreSQL connection
-import { config } from "dotenv";
+const { loadEnvForScript } = require("../packages/utils/src/loadEnv.js");
 
-// Load environment variables
-config({ path: ".env.local" });
+// Load environment variables using shared utility
+loadEnvForScript();
 
 const dbUrl = process.env.DATABASE_URL;
-
-if (!dbUrl) {
-  console.error("❌ Missing DATABASE_URL environment variable");
-  console.error("Make sure DATABASE_URL is set in .env.local");
-  process.exit(1);
-}
 
 // TODO: Initialize PostgreSQL connection
 const db = null; // Placeholder for PostgreSQL client

@@ -1,0 +1,95 @@
+
+> story-engine@0.1.0 dev /home/brian/projects/story-engine
+> turbo run dev --concurrency=16
+
+turbo 2.5.4
+
+• Packages in scope: @story-engine/adventures, @story-engine/ai, @story-engine/auth, @story-engine/domain-characters, @story-engine/mongodb, @story-engine/postgres, @story-engine/qdrant, @story-engine/redis, @story-engine/types, @story-engine/utils, @story-engine/validation, @story-engine/web, @story-engine/world
+• Running dev in 13 packages
+• Remote caching disabled
+@story-engine/utils:dev: cache bypass, force executing c83d526f47fbacd2
+@story-engine/ai:dev: cache bypass, force executing 9c3e4aabb026dc69
+@story-engine/types:dev: cache bypass, force executing 7b72a5baaf0dac10
+@story-engine/validation:dev: cache bypass, force executing 4f4d5e5f05d15b84
+@story-engine/web:dev: cache bypass, force executing 0a8b82848fb6a5b0
+@story-engine/qdrant:dev: cache bypass, force executing 68209972f6089882
+@story-engine/web:worker:dev: cache bypass, force executing 05287d8f7fdec751
+@story-engine/domain-characters:dev: cache bypass, force executing 1db7511bd4331643
+@story-engine/adventures:dev: cache bypass, force executing 15958689c6dbac3b
+@story-engine/mongodb:dev: cache bypass, force executing c9923bc89164c5e5
+@story-engine/redis:dev: cache bypass, force executing 904ff3ff66f26d7a
+@story-engine/auth:dev: cache bypass, force executing 11bed86e5e7af29c
+@story-engine/postgres:dev: cache bypass, force executing fad54bc8c396c8b4
+@story-engine/world:dev: cache bypass, force executing 7729711fb4b925e6
+@story-engine/ai:dev: 
+@story-engine/ai:dev: > @story-engine/ai@0.1.0 dev /home/brian/projects/story-engine/packages/ai
+@story-engine/ai:dev: > tsc -b --watch
+@story-engine/ai:dev: 
+@story-engine/utils:dev: 
+@story-engine/utils:dev: > @story-engine/utils@0.1.0 dev /home/brian/projects/story-engine/packages/utils
+@story-engine/utils:dev: > tsc --watch
+@story-engine/utils:dev: 
+@story-engine/redis:dev: 
+@story-engine/redis:dev: > @story-engine/redis@0.1.0 dev /home/brian/projects/story-engine/packages/redis
+@story-engine/redis:dev: > tsc -b --watch
+@story-engine/redis:dev: 
+@story-engine/validation:dev: 
+@story-engine/web:dev: 
+@story-engine/web:dev: > @story-engine/web@0.1.0 dev /home/brian/projects/story-engine/apps/web
+@story-engine/web:dev: > next dev --turbopack
+@story-engine/web:dev: 
+@story-engine/validation:dev: > @story-engine/validation@0.1.0 dev /home/brian/projects/story-engine/packages/validation
+@story-engine/validation:dev: > tsc -b --watch
+@story-engine/validation:dev: 
+@story-engine/mongodb:dev: 
+@story-engine/mongodb:dev: > @story-engine/mongodb@0.1.0 dev /home/brian/projects/story-engine/packages/mongodb
+@story-engine/mongodb:dev: > tsc -b --watch
+@story-engine/mongodb:dev: 
+@story-engine/types:dev: 
+@story-engine/types:dev: > @story-engine/types@0.1.0 dev /home/brian/projects/story-engine/packages/types
+@story-engine/types:dev: > tsc -b --watch
+@story-engine/types:dev: 
+@story-engine/web:worker:dev: 
+@story-engine/web:worker:dev: > @story-engine/web@0.1.0 worker:dev /home/brian/projects/story-engine/apps/web
+@story-engine/web:worker:dev: > WORKER_LOG_LEVEL=debug node ../../scripts/start-embedding-worker.js
+@story-engine/web:worker:dev: 
+@story-engine/qdrant:dev: 
+@story-engine/qdrant:dev: > @story-engine/qdrant@0.1.0 dev /home/brian/projects/story-engine/packages/qdrant
+@story-engine/qdrant:dev: > tsc -b --watch
+@story-engine/qdrant:dev: 
+@story-engine/domain-characters:dev: 
+@story-engine/domain-characters:dev: > @story-engine/domain-characters@0.1.0 dev /home/brian/projects/story-engine/packages/domain/characters
+@story-engine/domain-characters:dev: > tsc -b --watch
+@story-engine/domain-characters:dev: 
+@story-engine/postgres:dev: 
+@story-engine/postgres:dev: > @story-engine/postgres@0.1.0 dev /home/brian/projects/story-engine/packages/postgres
+@story-engine/postgres:dev: > tsc -b --watch
+@story-engine/postgres:dev: 
+@story-engine/auth:dev: 
+@story-engine/auth:dev: > @story-engine/auth@0.1.0 dev /home/brian/projects/story-engine/packages/auth
+@story-engine/auth:dev: > tsc -b --watch
+@story-engine/auth:dev: 
+@story-engine/world:dev: 
+@story-engine/world:dev: > @story-engine/world@0.1.0 dev /home/brian/projects/story-engine/packages/world
+@story-engine/world:dev: > tsc -b --watch
+@story-engine/world:dev: 
+@story-engine/adventures:dev: 
+@story-engine/adventures:dev: > @story-engine/adventures@0.1.0 dev /home/brian/projects/story-engine/packages/adventures
+@story-engine/adventures:dev: > tsc -b --watch
+@story-engine/adventures:dev: 
+@story-engine/web:worker:dev: [dotenv@17.2.0] injecting env (0) from .env (tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`)
+@story-engine/web:worker:dev: ERROR: DATABASE_URL environment variable is required
+@story-engine/web:worker:dev:  ELIFECYCLE  Command failed with exit code 1.
+@story-engine/web:worker:dev: ERROR: command finished with error: command (/home/brian/projects/story-engine/apps/web) /home/brian/.local/share/pnpm/.tools/pnpm/10.13.1/bin/pnpm run worker:dev exited (1)
+@story-engine/mongodb:dev: [2J[3J[H
+@story-engine/redis:dev: [2J[3J[H
+@story-engine/types:dev: [2J[3J[H
+@story-engine/web#worker:dev: command (/home/brian/projects/story-engine/apps/web) /home/brian/.local/share/pnpm/.tools/pnpm/10.13.1/bin/pnpm run worker:dev exited (1)
+
+ Tasks:    0 successful, 14 total
+Cached:    0 cached, 14 total
+  Time:    1.614s 
+Failed:    @story-engine/web#worker:dev
+
+ ERROR  run failed: command  exited (1)
+ ELIFECYCLE  Command failed with exit code 1.

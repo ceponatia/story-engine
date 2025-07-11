@@ -1,4 +1,9 @@
 packages:
-  - "apps/*"
-  - "packages/*"
-  - "packages/domain/*"
+  - apps/*
+  - packages/*
+  - packages/domain/*
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - unrs-resolver

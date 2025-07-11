@@ -5,6 +5,9 @@ export * from "./search/similarity.parser";
 export * from "./parsers/tag.parser";
 export * from "./db/base.repository";
 
+// Environment Loading
+export * from "./loadEnv";
+
 // Infrastructure
 export * from "./infrastructure/errorHandler";
 export * from "./infrastructure/fallbackManager";

@@ -1,7 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
-  "globalDependencies": ["**/.env.*local"],
+  "remoteCache": {
+    "signature": true
+  },
+  "globalDependencies": ["**/.env", "**/.env.*local"],
   "globalEnv": [
     "NODE_ENV",
     "DATABASE_URL",
@@ -21,23 +24,30 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "outputs": [],
+      "with": ["worker:dev"]
     },
     "start": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "outputs": [],
+      "dependsOn": []
     },
     "lint": {
       "outputs": [],
-      "persistent": false
+      "persistent": false,
+      "dependsOn": []
     },
     "lint:fix": {
       "outputs": [],
-      "persistent": false
+      "persistent": false,
+      "dependsOn": []
     },
     "type-check": {
       "outputs": [],
-      "persistent": false
+      "persistent": false,
+      "dependsOn": []
     },
     "test": {
       "dependsOn": ["^build"],
@@ -46,7 +56,9 @@
     },
     "test:watch": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "outputs": [],
+      "dependsOn": []
     },
     "test:coverage": {
       "dependsOn": ["^build"],
@@ -61,19 +73,25 @@
     },
     "format": {
       "outputs": [],
-      "persistent": false
+      "persistent": false,
+      "dependsOn": []
     },
     "format:check": {
       "outputs": [],
-      "persistent": false
+      "persistent": false,
+      "dependsOn": []
     },
     "worker:start": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "outputs": [],
+      "dependsOn": []
     },
     "worker:dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "outputs": [],
+      "dependsOn": []
     }
   }
 }

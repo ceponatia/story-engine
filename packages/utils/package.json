@@ -21,11 +21,7 @@
   },
   "dependencies": {
     "@story-engine/types": "workspace:*",
-    "typescript": "^5"
+    "dotenv": "^17.2.0"
   },
-  "devDependencies": {
-    "@types/node": "^20",
-    "eslint": "^9",
-    "jest": "^29.7.0"
-  }
+  "devDependencies": {}
 }

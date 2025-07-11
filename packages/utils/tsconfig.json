@@ -2,20 +2,14 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": ".",
+    "outDir": "../../dist/utils",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "removeComments": true,
     "paths": {
       "@story-engine/utils": ["./src"]
     }
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"]
 }

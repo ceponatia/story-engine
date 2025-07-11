@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "turbo build --continue",
-    "dev": "turbo dev",
+    "dev": "turbo run dev --concurrency=16",
     "lint": "turbo lint --continue",
     "lint:fix": "turbo lint:fix --continue",
     "type-check": "turbo type-check --continue",
@@ -20,6 +20,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,json,md}\"",
     "check:naming": "node scripts/checkNaming.js",
+    "check:env-loading": "node scripts/validate-env-loading.js",
     "worker:start": "turbo worker:start",
     "worker:dev": "turbo worker:dev",
     "clean": "turbo clean && rm -rf node_modules",
@@ -52,5 +53,5 @@
     "turbo": "^2.5.4",
     "typescript": "^5.8.3"
   },
-  "packageManager": "pnpm@9.1.0"
+  "packageManager": "pnpm@10.13.1"
 }

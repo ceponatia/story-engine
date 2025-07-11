@@ -11,15 +11,13 @@
     }
   },
   "scripts": {
-    "build": "pnpm -w exec tsc -b",
-    "dev": "pnpm -w exec tsc -b --watch",
+    "build": "tsc -b",
+    "dev": "tsc -b --watch",
     "lint": "eslint src/",
-    "type-check": "pnpm -w exec tsc -b --noEmit"
+    "type-check": "tsc -b --noEmit"
   },
   "dependencies": {
     "zod": "^3.25.67"
   },
-  "devDependencies": {
-    "typescript": "^5"
-  }
+  "devDependencies": {}
 }

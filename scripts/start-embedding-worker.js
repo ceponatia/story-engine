@@ -19,13 +19,10 @@
  *   ENABLE_BACKGROUND_EMBEDDINGS - Must be 'true' to process jobs
  */
 
-require("dotenv").config();
+const { loadEnvForScript } = require("../packages/utils/src/loadEnv.js");
+loadEnvForScript();
 
-// Ensure environment is configured
-if (!process.env.DATABASE_URL) {
-  console.error("ERROR: DATABASE_URL environment variable is required");
-  process.exit(1);
-}
+// Environment validation handled by loadEnvForScript
 
 if (process.env.ENABLE_BACKGROUND_EMBEDDINGS !== "true") {
   console.error('ERROR: ENABLE_BACKGROUND_EMBEDDINGS must be set to "true"');

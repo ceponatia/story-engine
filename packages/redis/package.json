@@ -11,10 +11,10 @@
     }
   },
   "scripts": {
-    "build": "pnpm -w exec tsc -b",
-    "dev": "pnpm -w exec tsc -b --watch",
+    "build": "tsc -b",
+    "dev": "tsc -b --watch",
     "lint": "eslint src/",
-    "type-check": "pnpm -w exec tsc -b --noEmit"
+    "type-check": "tsc -b --noEmit"
   },
   "dependencies": {
     "ioredis": "^5.4.1"

@@ -81,6 +81,7 @@ pnpm lint                         # Linting (uses Turborepo)
 pnpm test                         # Unit tests (uses Turborepo)
 pnpm test:watch                   # Watch mode
 pnpm check:naming                 # Check naming conventions
+pnpm check:env-loading            # Validate environment loading patterns
 ```
 
 Database access:
@@ -151,3 +152,31 @@ This command scans all TypeScript files and reports violations of our naming con
 - ❌ **Forbidden**: kebab-case (user-actions.ts), snake_case (user_actions.ts)
 
 The tool automatically excludes build artifacts, node_modules, and other non-source directories.
+
+// Environment Loading for Standalone Scripts
+// -------------------------
+
+All standalone Node.js scripts (non-Next.js) must use the shared environment loader from `@story-engine/utils`:
+
+```ts
+import { loadEnv, loadEnvForScript } from "@story-engine/utils";
+
+// Basic loading from .env.local
+loadEnv();
+
+// Enhanced loading with database URL validation (recommended for scripts)
+loadEnvForScript();
+```
+
+**Critical Rules:**
+- ✅ **Use**: `loadEnv()` or `loadEnvForScript()` from `@story-engine/utils`
+- ❌ **Avoid**: Direct `require("dotenv").config()` calls
+- Next.js apps automatically load `.env.local` - no manual loading needed
+- Standalone scripts require explicit environment loading
+
+**Validation:**
+```bash
+pnpm check:env-loading            # Validates all scripts use standardized loader
+```
+
+This ensures consistent `.env.local` loading across all scripts and prevents configuration drift.

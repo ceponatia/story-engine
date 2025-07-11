@@ -7,10 +7,13 @@
  */
 
 const { Pool } = require("pg");
+const { loadEnvForScript } = require("../packages/utils/src/loadEnv.js");
+
+// Load environment variables
+loadEnvForScript();
 
 // Database configuration
-const DATABASE_URL =
-  process.env.DATABASE_URL || "postgresql://claude:yurikml2@localhost:5432/storyengine";
+const DATABASE_URL = process.env.DATABASE_URL;
 
 async function testValidation() {
   const pool = new Pool({
