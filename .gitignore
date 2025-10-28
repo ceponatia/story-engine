@@ -5,11 +5,11 @@
 .github/prompts/
 
 #Ignore all build output
-build/
-dist/
-.playwright-mcp/
+**/build/**
+**/dist/**
+**/.playwright-mcp/
 
 #Ignore installed dependencies & configs
-node_modules/
-.turbo/
-.vscode/
+**/node_modules/**/*
+**/.turbo/**/*
+**/.vscode/**/*
