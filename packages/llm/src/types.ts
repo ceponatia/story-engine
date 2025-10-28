@@ -1,8 +1,17 @@
 // Public, provider-agnostic types for the LLM package
 // NOTE: When the shared types package is fully published, switch to:
 // import type { Session, Turn } from '@story-engine/types'
-export interface Session { id: string; title: string; characterId?: string }
-export interface Turn { id: string; sessionId: string; role: 'user' | 'assistant'; content: string }
+export interface Session {
+  id: string;
+  title: string;
+  characterId?: string;
+}
+export interface Turn {
+  id: string;
+  sessionId: string;
+  role: 'user' | 'assistant';
+  content: string;
+}
 
 export type ChatRole = 'system' | 'user' | 'assistant' | 'tool';
 
@@ -90,14 +99,24 @@ export interface ProviderAdapter {
   chat(
     messages: ChatMessage[],
     opts: CompletionOptions,
-    signal?: AbortSignalLike
-  ): Promise<{ stream: AsyncIterable<CompletionDelta>; final: Promise<CompletionFinal> }>; 
+    signal?: AbortSignalLike,
+  ): Promise<{
+    stream: AsyncIterable<CompletionDelta>;
+    final: Promise<CompletionFinal>;
+  }>;
 }
 
 export interface TelemetryEvents {
-  onPreflight?(evt: { requestId: string; sessionId?: string; model: string; }): void;
-  onCompletion?(evt: { requestId: string; model: string; latencyMs: number; usage?: Usage; finishReason?: FinishReason; retries?: number; }): void;
-  onError?(evt: { requestId: string; model?: string; error: unknown; }): void;
+  onPreflight?(evt: { requestId: string; sessionId?: string; model: string }): void;
+  onCompletion?(evt: {
+    requestId: string;
+    model: string;
+    latencyMs: number;
+    usage?: Usage;
+    finishReason?: FinishReason;
+    retries?: number;
+  }): void;
+  onError?(evt: { requestId: string; model?: string; error: unknown }): void;
 }
 
 export interface LLMClientInit {
@@ -115,8 +134,10 @@ export interface CompleteChatParams {
 }
 
 // Minimal signal type to avoid depending on DOM lib
-export type AbortSignalLike = {
-  aborted?: boolean
-  addEventListener?: (type: string, listener: (...args: any[]) => void) => void
-  removeEventListener?: (type: string, listener: (...args: any[]) => void) => void
-} | undefined;
+export type AbortSignalLike =
+  | {
+      aborted?: boolean;
+      addEventListener?: (type: string, listener: (...args: any[]) => void) => void;
+      removeEventListener?: (type: string, listener: (...args: any[]) => void) => void;
+    }
+  | undefined;

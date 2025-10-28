@@ -1,13 +1,14 @@
+import svelteParser from 'svelte-eslint-parser';
+
 import js from '@eslint/js';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import svelte from 'eslint-plugin-svelte';
-import svelteParser from 'svelte-eslint-parser';
-import importPlugin from 'eslint-plugin-import';
-import boundaries from 'eslint-plugin-boundaries';
-import unused from 'eslint-plugin-unused-imports';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import vitest from '@vitest/eslint-plugin';
+import boundaries from 'eslint-plugin-boundaries';
+import importPlugin from 'eslint-plugin-import';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import svelte from 'eslint-plugin-svelte';
+import unused from 'eslint-plugin-unused-imports';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
@@ -33,8 +34,9 @@ export default defineConfig([
       parserOptions: {
         sourceType: 'module',
         ecmaVersion: 'latest',
-        // Enable project service so the TS resolver understands your tsconfig paths
-        projectService: true,
+        // Disable TS project service to avoid monorepo parse errors for non-tsconfig files
+        projectService: false,
+        extraFileExtensions: ['.svelte'],
       },
       globals: { process: 'readonly' },
     },
@@ -52,13 +54,16 @@ export default defineConfig([
       // Feature-first element groups for boundaries
       'boundaries/elements': [
         { type: 'feature-root', pattern: 'apps/web/src/lib/features/*' },
-        { type: 'pages',        pattern: 'apps/web/src/lib/features/*/pages/**' },
-        { type: 'widgets',      pattern: 'apps/web/src/lib/features/*/widgets/**' },
-        { type: 'entities',     pattern: 'apps/web/src/lib/features/*/entities/**' },
-        { type: 'model',        pattern: 'apps/web/src/lib/features/*/model/**' },
-        { type: 'api',          pattern: 'apps/web/src/lib/features/*/api/**' },
-        { type: 'styles',       pattern: 'apps/web/src/lib/features/*/styles/**' },
-        { type: 'tests',        pattern: 'apps/web/src/lib/features/*/tests/**' },
+        { type: 'pages', pattern: 'apps/web/src/lib/features/*/pages/**' },
+        { type: 'widgets', pattern: 'apps/web/src/lib/features/*/widgets/**' },
+        {
+          type: 'entities',
+          pattern: 'apps/web/src/lib/features/*/entities/**',
+        },
+        { type: 'model', pattern: 'apps/web/src/lib/features/*/model/**' },
+        { type: 'api', pattern: 'apps/web/src/lib/features/*/api/**' },
+        { type: 'styles', pattern: 'apps/web/src/lib/features/*/styles/**' },
+        { type: 'tests', pattern: 'apps/web/src/lib/features/*/tests/**' },
       ],
     },
     rules: {
@@ -77,30 +82,44 @@ export default defineConfig([
       // 'import/order': [ 'warn', { 'newlines-between': 'always', alphabetize: { order: 'asc', caseInsensitive: true } } ],
 
       // Baseline feature layering: keep pages/widgets/entities/model/api clean
-      'boundaries/element-types': ['error', {
-        default: 'allow',
-        rules: [
-          // Pages can depend on widgets, entities, model, api (plus styles)
-          { from: 'pages',    allow: ['widgets', 'entities', 'model', 'api', 'styles'] },
-          // Widgets can depend on entities and model (plus styles)
-          { from: 'widgets',  allow: ['entities', 'model', 'styles'] },
-          // Entities are leaf/presentational (styles allowed)
-          { from: 'entities', allow: ['styles'] },
-          // Model (stores/actions) can depend on api and entities (types-only)
-          { from: 'model',    allow: ['api', 'entities'] },
-          // API should not depend back into UI layers
-          { from: 'api',      disallow: ['model', 'widgets', 'pages', 'entities'] },
-        ],
-      }],
+      'boundaries/element-types': [
+        'error',
+        {
+          default: 'allow',
+          rules: [
+            // Pages can depend on widgets, entities, model, api (plus styles)
+            {
+              from: 'pages',
+              allow: ['widgets', 'entities', 'model', 'api', 'styles'],
+            },
+            // Widgets can depend on entities and model (plus styles)
+            { from: 'widgets', allow: ['entities', 'model', 'styles'] },
+            // Entities are leaf/presentational (styles allowed)
+            { from: 'entities', allow: ['styles'] },
+            // Model (stores/actions) can depend on api and entities (types-only)
+            { from: 'model', allow: ['api', 'entities'] },
+            // API should not depend back into UI layers
+            {
+              from: 'api',
+              disallow: ['model', 'widgets', 'pages', 'entities'],
+            },
+          ],
+        },
+      ],
 
-      // Prevent sideways imports between features inside apps/web (tune as you add features)
-      'import/no-restricted-paths': ['error', {
-        zones: [
-          { target: 'apps/web/src/lib/features/chat',        from: ['apps/web/src/lib/features/sessions', 'apps/web/src/lib/features/characters'] },
-          { target: 'apps/web/src/lib/features/sessions',    from: ['apps/web/src/lib/features/chat', 'apps/web/src/lib/features/characters'] },
-          { target: 'apps/web/src/lib/features/characters',  from: ['apps/web/src/lib/features/chat', 'apps/web/src/lib/features/sessions'] },
-        ],
-      }],
+      // Prefer $lib alias and ban deep cross-feature absolute imports; use feature barrels
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['$lib/features/*/*/**'],
+              message:
+                'Cross-feature imports must use the feature barrel: $lib/features/<feature> (or widgets/entities barrel).',
+            },
+          ],
+        },
+      ],
     },
   },
 
@@ -113,21 +132,31 @@ export default defineConfig([
         parser: tsParser, // make <script lang="ts"> blocks TS-aware
         ecmaVersion: 'latest',
         sourceType: 'module',
-        projectService: true,
+        extraFileExtensions: ['.svelte'],
+        projectService: false,
       },
     },
-    plugins: { svelte, 'unused-imports': unused, 'simple-import-sort': simpleImportSort, import: importPlugin, boundaries },
+    plugins: {
+      svelte,
+      'unused-imports': unused,
+      'simple-import-sort': simpleImportSort,
+      import: importPlugin,
+      boundaries,
+    },
     settings: {
       'import/resolver': { typescript: true },
       'boundaries/elements': [
         { type: 'feature-root', pattern: 'apps/web/src/lib/features/*' },
-        { type: 'pages',        pattern: 'apps/web/src/lib/features/*/pages/**' },
-        { type: 'widgets',      pattern: 'apps/web/src/lib/features/*/widgets/**' },
-        { type: 'entities',     pattern: 'apps/web/src/lib/features/*/entities/**' },
-        { type: 'model',        pattern: 'apps/web/src/lib/features/*/model/**' },
-        { type: 'api',          pattern: 'apps/web/src/lib/features/*/api/**' },
-        { type: 'styles',       pattern: 'apps/web/src/lib/features/*/styles/**' },
-        { type: 'tests',        pattern: 'apps/web/src/lib/features/*/tests/**' },
+        { type: 'pages', pattern: 'apps/web/src/lib/features/*/pages/**' },
+        { type: 'widgets', pattern: 'apps/web/src/lib/features/*/widgets/**' },
+        {
+          type: 'entities',
+          pattern: 'apps/web/src/lib/features/*/entities/**',
+        },
+        { type: 'model', pattern: 'apps/web/src/lib/features/*/model/**' },
+        { type: 'api', pattern: 'apps/web/src/lib/features/*/api/**' },
+        { type: 'styles', pattern: 'apps/web/src/lib/features/*/styles/**' },
+        { type: 'tests', pattern: 'apps/web/src/lib/features/*/tests/**' },
       ],
     },
     rules: {
@@ -137,17 +166,38 @@ export default defineConfig([
 
       // Handy Svelte lint
       'svelte/no-at-html-tags': 'warn',
-      // You can mirror the same boundaries rules if you want them applied inside .svelte:
-      'boundaries/element-types': ['error', {
-        default: 'allow',
-        rules: [
-          { from: 'pages',    allow: ['widgets', 'entities', 'model', 'api', 'styles'] },
-          { from: 'widgets',  allow: ['entities', 'model', 'styles'] },
-          { from: 'entities', allow: ['styles'] },
-          { from: 'model',    allow: ['api', 'entities'] },
-          { from: 'api',      disallow: ['model', 'widgets', 'pages', 'entities'] },
-        ],
-      }],
+      // Prefer $lib alias and ban deep cross-feature absolute imports; use feature barrels
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['$lib/features/*/*/**'],
+              message:
+                'Cross-feature imports must use the feature barrel: $lib/features/<feature> (or widgets/entities barrel).',
+            },
+          ],
+        },
+      ],
+      'boundaries/element-types': [
+        'error',
+        {
+          default: 'allow',
+          rules: [
+            {
+              from: 'pages',
+              allow: ['widgets', 'entities', 'model', 'api', 'styles'],
+            },
+            { from: 'widgets', allow: ['entities', 'model', 'styles'] },
+            { from: 'entities', allow: ['styles'] },
+            { from: 'model', allow: ['api', 'entities'] },
+            {
+              from: 'api',
+              disallow: ['model', 'widgets', 'pages', 'entities'],
+            },
+          ],
+        },
+      ],
     },
   },
 
@@ -162,14 +212,17 @@ export default defineConfig([
   {
     files: ['apps/web/src/**/*.{ts,tsx,svelte}'],
     rules: {
-      'no-restricted-imports': ['error', {
-        patterns: [
-          {
-            group: ['../*', '../../*', '../../../*', '../../../../*'],
-            message: 'Use $lib/... path aliases instead of deep relative imports.'
-          }
-        ]
-      }],
-    }
-  }
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['../*', '../../*', '../../../*', '../../../../*'],
+              message: 'Use $lib/... path aliases instead of deep relative imports.',
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]);

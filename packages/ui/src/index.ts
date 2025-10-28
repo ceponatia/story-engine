@@ -1,2 +1,2 @@
 // UI entry (placeholder)
-export {}
+export {};

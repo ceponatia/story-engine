@@ -10,12 +10,12 @@ Provider-agnostic LLM facade and adapters for Story‑Engine.
 ## Quick start
 
 ```ts
-import { LLMClient, OllamaAdapter, defaultPromptHooks } from '@story-engine/llm'
+import { LLMClient, OllamaAdapter, defaultPromptHooks } from '@story-engine/llm';
 
 const client = new LLMClient({
   adapter: new OllamaAdapter({ baseUrl: 'http://localhost:11434' }),
   hooks: defaultPromptHooks,
-})
+});
 
 const { stream, final } = await client.completeChat({
   messages: [
@@ -23,13 +23,13 @@ const { stream, final } = await client.completeChat({
     { role: 'user', content: 'Say hello' },
   ],
   options: { model: 'mistral:instruct', temperature: 0.2 },
-})
+});
 
-let text = ''
+let text = '';
 for await (const d of stream) {
-  if (d.type === 'text' && d.text) text += d.text
+  if (d.type === 'text' && d.text) text += d.text;
 }
-console.log('final:', await final)
+console.log('final:', await final);
 ```
 
 ## Notes

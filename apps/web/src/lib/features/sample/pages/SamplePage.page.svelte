@@ -1,0 +1,1 @@
+<!-- Placeholder: SamplePage page component -->

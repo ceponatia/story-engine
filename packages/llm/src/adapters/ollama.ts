@@ -35,8 +35,10 @@ export class OllamaAdapter implements ProviderAdapter {
       signal.addEventListener('abort', () => controller.abort());
     }
 
-    const URLCtor = (g.URL ?? ((path: string, base: string) => `${base.replace(/\/$/, '')}${path}`)) as any;
-    const url = URLCtor('/api/chat', this.baseUrl).toString?.() ?? URLCtor('/api/chat', this.baseUrl);
+    const URLCtor = (g.URL ??
+      ((path: string, base: string) => `${base.replace(/\/$/, '')}${path}`)) as any;
+    const url =
+      URLCtor('/api/chat', this.baseUrl).toString?.() ?? URLCtor('/api/chat', this.baseUrl);
     const body = {
       model: opts.model,
       messages: messages.map((m) => ({ role: m.role, content: m.content })),
@@ -67,7 +69,14 @@ export class OllamaAdapter implements ProviderAdapter {
 
     async function* stream(): AsyncIterable<CompletionDelta> {
       const Decoder = (g as any).TextDecoder;
-      const decoder = new (Decoder ?? class { decode(u: Uint8Array) { return Array.from(u).map((c) => String.fromCharCode(c)).join(''); } })();
+      const decoder = new (Decoder ??
+        class {
+          decode(u: Uint8Array) {
+            return Array.from(u)
+              .map((c) => String.fromCharCode(c))
+              .join('');
+          }
+        })();
       let buffer = '';
       while (true) {
         const { done, value } = await reader.read();
@@ -103,7 +112,9 @@ export class OllamaAdapter implements ProviderAdapter {
           if (chunk?.done) {
             finishReason = 'stop';
           }
-        } catch { /* noop */ }
+        } catch {
+          /* noop */
+        }
       }
       return;
     }

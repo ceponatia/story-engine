@@ -1,7 +1,24 @@
 ---
-description: "{{MODE_NAME}} — operate strictly within {{SCOPE_DESCRIPTION}}. Concise standards for design, policy, and changes."
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'fetch', 'githubRepo', 'extensions', 'todos']
-model: "GPT-5"
+description: '{{MODE_NAME}} — operate strictly within {{SCOPE_DESCRIPTION}}. Concise standards for design, policy, and changes.'
+tools:
+  [
+    'edit',
+    'search',
+    'new',
+    'runCommands',
+    'runTasks',
+    'usages',
+    'vscodeAPI',
+    'think',
+    'problems',
+    'changes',
+    'testFailure',
+    'fetch',
+    'githubRepo',
+    'extensions',
+    'todos',
+  ]
+model: 'GPT-5'
 ---
 
 # {{MODE_NAME}}

@@ -7,5 +7,12 @@
     }
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", ".svelte-kit"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".svelte-kit",
+    // Exclude generated smoke tests from TS typecheck; they run under Vitest
+    "src/lib/**/__tests__/**",
+    "src/lib/**/tests/**"
+  ]
 }

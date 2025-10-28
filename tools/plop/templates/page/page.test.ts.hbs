@@ -1,0 +1,3 @@
+import { render } from '@testing-library/svelte' import { test, expect } from 'vitest' import Page
+from '$lib/features/{{kebab feature}}/pages/{{pascal name}}.page.svelte' test('renders', () => {
+const { container } = render(Page, {}) expect(container).toBeTruthy() })

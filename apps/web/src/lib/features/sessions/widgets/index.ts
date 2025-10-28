@@ -1,1 +1,1 @@
-// Placeholder barrel for sessions widgets
+export {};

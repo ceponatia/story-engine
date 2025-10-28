@@ -1,5 +1,5 @@
 ---
-model: "GPT-5"
+model: 'GPT-5'
 ---
 
 # Goal
@@ -20,10 +20,10 @@ Enter paths and descriptions here.
 
 Add as many tasks as needed to complete the goal.
 
-1) Task 1
-2) Task 2
-3) Task 3
-4) Task 4
+1. Task 1
+2. Task 2
+3. Task 3
+4. Task 4
 
 ## Notes
 

@@ -1,1 +1,1 @@
-// Placeholder barrel for characters widgets
+export {};

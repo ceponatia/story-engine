@@ -40,6 +40,8 @@ async function main() {
 
 main().catch((err) => {
   console.error('[error]', err?.message ?? err);
-  console.error('\nTroubleshooting:\n- Ensure Ollama is running locally.\n- Ensure the model is available (e.g., mistral:instruct).');
+  console.error(
+    '\nTroubleshooting:\n- Ensure Ollama is running locally.\n- Ensure the model is available (e.g., mistral:instruct).',
+  );
   process.exit(1);
 });

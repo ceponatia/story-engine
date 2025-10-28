@@ -12,6 +12,9 @@ export const defaultPromptHooks: PromptHooks = {
   },
   sanitize(messages: ChatMessage[], _opts: CompletionOptions): ChatMessage[] {
     // Simple sanitize: trim, collapse whitespace
-    return messages.map((m) => ({ ...m, content: m.content.replace(/\s+/g, ' ').trim() }));
+    return messages.map((m) => ({
+      ...m,
+      content: m.content.replace(/\s+/g, ' ').trim(),
+    }));
   },
 };
