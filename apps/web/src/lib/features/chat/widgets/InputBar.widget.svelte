@@ -1,0 +1,1 @@
+<!-- Placeholder: Input bar widget -->
