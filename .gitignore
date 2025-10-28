@@ -1,15 +1,55 @@
-#Ignore vscode AI rules
+# ── Project / prompt files
 .github/instructions/
 .github/copilot-instructions.md
 .github/chatmodes/
 .github/prompts/
 
-#Ignore all build output
-**/build/**
-**/dist/**
-**/.playwright-mcp/
+# ── Dependencies & tool caches
+node_modules/
+.pnpm-store/
+.turbo/
+.eslintcache
 
-#Ignore installed dependencies & configs
-**/node_modules/**/*
-**/.turbo/**/*
-**/.vscode/**/*
+# ── Editor
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# ── Builds & framework output
+dist/
+build/
+.svelte-kit/
+.next/
+.nuxt/
+.vercel/
+.netlify/
+tmp/
+*.tsbuildinfo
+
+# ── Vite / bundler caches
+.vite/
+
+# ── Tests & coverage
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+.playwright/
+.playwright-mcp/
+
+# ── Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
+
+# ── Env files (keep a template)
+.env
+.env.*
+!.env.example
+
+# ── OS cruft
+.DS_Store
+Thumbs.db
