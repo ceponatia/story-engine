@@ -1,0 +1,34 @@
+{
+  "name": "story-engine",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.17.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev test --parallel",
+    "dev:api": "turbo run dev --filter=@story-engine/api",
+    "quickstart": "scripts/quickstart",
+  "stop": "fish scripts/stop",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "pnpm run lint:code && pnpm run lint:md",
+    "lint:code": "turbo run lint",
+    "lint:md": "markdownlint \"**/*.md\" --ignore node_modules",
+    "test": "turbo run test",
+    "clean": "turbo run clean"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "eslint": "^9.38.0",
+    "eslint-plugin-import": "^2.31.0",
+    "turbo": "^2.5.8"
+  },
+  "packageManager": "pnpm@10.19.0+sha512.c9fc7236e92adf5c8af42fd5bf1612df99c2ceb62f27047032f4720b33f8eacdde311865e91c411f2774f618d82f320808ecb51718bfa82c060c4ba7c76a32b8"
+}

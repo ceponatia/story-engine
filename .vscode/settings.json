@@ -1,0 +1,20 @@
+{
+	// Stylelint
+	"stylelint.validate": ["css", "svelte"],
+	"css.validate": false,
+	"scss.validate": false,
+	"less.validate": false,
+
+	// Editor
+	"editor.codeActionsOnSave": {
+		"source.fixAll.stylelint": "explicit"
+	},
+
+	// Markdownlint: limit to Markdown files only
+	"markdownlint.pattern": "**/*.md",
+
+	// Files
+	"files.associations": {
+		"*.css": "css"
+	}
+}

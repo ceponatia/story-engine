@@ -1,0 +1,119 @@
+#!/usr/bin/env fish
+# Quickstart script for Story-Engine (fish shell)
+# - Kills any processes on required app ports (web, api) — excludes Ollama
+# - Starts backend API and frontend web dev servers
+#
+# Ports:
+# - Web: $WEB_PORT (default 3000)
+# - API: $API_PORT (default 4001)
+# - Ollama (11434) is intentionally ignored
+
+function has_cmd
+    type -q $argv[1]
+end
+
+function kill_port
+    set -l PORT $argv[1]
+    # Safety: require a numeric, non-empty port
+    if test -z "$PORT"; or not string match -rq '^[0-9]+$' -- $PORT
+        echo "Skip killing: invalid or empty port value ('$PORT')"
+        return 1
+    end
+    if test "$PORT" = "11434"
+        echo "Skip killing: port 11434 reserved for Ollama"
+        return 0
+    end
+    if has_cmd lsof
+        set -l PIDS (lsof -ti TCP:$PORT)
+        if test (count $PIDS) -gt 0
+            echo "Killing processes on port $PORT: $PIDS"
+            command kill -TERM $PIDS >/dev/null 2>&1
+            sleep 0.5
+            set -l STILL (lsof -ti TCP:$PORT)
+            if test (count $STILL) -gt 0
+                command kill -KILL $STILL >/dev/null 2>&1
+            end
+        end
+    else if has_cmd fuser
+        echo "Killing processes on port $PORT via fuser"
+        fuser -k "$PORT/tcp"
+    else
+        echo "Warning: cannot kill port $PORT (need lsof or fuser)"
+    end
+end
+
+function wait_for_http
+    set -l URL $argv[1]
+    set -l MAX 40
+    if test (count $argv) -ge 2
+        set MAX $argv[2]
+    end
+    for i in (seq $MAX)
+        if curl -sf "$URL" > /dev/null 2>&1
+            return 0
+        end
+        sleep 0.25
+    end
+    return 1
+end
+
+# Move to repo root (this script resides in scripts/)
+set -l SCRIPT_DIR (dirname (status -f))
+cd (realpath "$SCRIPT_DIR/..")
+
+# Resolve ports with defaults (handle unset/empty/non-numeric)
+set -l WEB $WEB_PORT
+if test -z "$WEB"; or not string match -rq '^[0-9]+$' -- $WEB
+    set -l WEB 3000
+end
+
+set -l API $API_PORT
+if test -z "$API"; or not string match -rq '^[0-9]+$' -- $API
+    set -l API 4001
+end
+
+# Ensure we don't touch Ollama (11434)
+echo "Checking app ports (web: $WEB, api: $API)…"
+if test "$WEB" = "11434"; or test "$API" = "11434"
+    echo "Note: 11434 is reserved for Ollama and will not be killed by this script."
+end
+
+# Kill any processes bound to required app ports
+kill_port $WEB
+kill_port $API
+
+# Start backend API
+if not has_cmd pnpm
+    echo "Error: pnpm not found in PATH. Please install pnpm and try again."
+    exit 1
+end
+
+set -l BACK_CMD pnpm --filter @story-engine/api dev
+set -lx API_PORT $API
+
+echo "Starting backend API on :$API …"
+# run in background
+$BACK_CMD &
+set -l BACK_PID $last_pid
+
+# Wait for health
+if wait_for_http "http://localhost:$API/api/healthz" 80
+    echo "Backend healthy at http://localhost:$API"
+else
+    echo "Warning: backend did not become healthy on :$API"
+end
+
+# Start frontend web only if package still exists
+if test -f apps/web/package.json
+    set -l WEB_CMD pnpm --filter @story-engine/web dev
+    echo "Starting frontend on :$WEB …"
+    $WEB_CMD &
+    set -l WEB_PID $last_pid
+    set -l WEB_LINE (printf "  Web  (pid %s) -> http://localhost:%s\n" $WEB_PID $WEB)
+else
+    echo "Skipping frontend: apps/web has been removed/disabled."
+    set -l WEB_LINE "  Web  (skipped)\n"
+end
+
+# Summary
+printf "\n---\nStarted processes:\n  API  (pid %s) -> http://localhost:%s\n%s\nUse 'kill %s' to stop API%s\n" $BACK_PID $API $WEB_LINE $BACK_PID (test -n "$WEB_PID"; and printf " and %s" $WEB_PID)

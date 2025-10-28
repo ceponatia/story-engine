@@ -1,0 +1,68 @@
+#!/usr/bin/env fish
+# Stop script for Story-Engine (fish shell)
+# - Gracefully stops backend API and frontend web by freeing their ports
+# - Never touches Ollama's default port (11434)
+#
+# Ports:
+# - Web: $WEB_PORT (default 3000)
+# - API: $API_PORT (default 4001)
+# - Ollama (11434) is intentionally ignored
+
+function has_cmd
+    type -q $argv[1]
+end
+
+function kill_port
+    set -l PORT $argv[1]
+    # Safety: require a numeric, non-empty port
+    if test -z "$PORT"; or not string match -rq '^[0-9]+$' -- $PORT
+        echo "Skip killing: invalid or empty port value ('$PORT')"
+        return 1
+    end
+    if test "$PORT" = "11434"
+        echo "Skip killing: port 11434 reserved for Ollama"
+        return 0
+    end
+    if has_cmd lsof
+        set -l PIDS (lsof -ti TCP:$PORT)
+        if test (count $PIDS) -gt 0
+            echo "Stopping processes on port $PORT: $PIDS"
+            command kill -TERM $PIDS >/dev/null 2>&1
+            sleep 0.5
+            set -l STILL (lsof -ti TCP:$PORT)
+            if test (count $STILL) -gt 0
+                echo "Force killing stubborn PIDs on port $PORT: $STILL"
+                command kill -KILL $STILL >/dev/null 2>&1
+            end
+        else
+            echo "No processes found on port $PORT"
+        end
+    else if has_cmd fuser
+        echo "Stopping processes on port $PORT via fuser"
+        fuser -k "$PORT/tcp"
+    else
+        echo "Warning: cannot kill port $PORT (need lsof or fuser)"
+    end
+end
+
+# Move to repo root (this script resides in scripts/)
+set -l SCRIPT_DIR (dirname (status -f))
+cd (realpath "$SCRIPT_DIR/..")
+
+# Resolve ports with defaults (handle unset/empty/non-numeric)
+set -l WEB $WEB_PORT
+if test -z "$WEB"; or not string match -rq '^[0-9]+$' -- $WEB
+    set -l WEB 3000
+end
+
+set -l API $API_PORT
+if test -z "$API"; or not string match -rq '^[0-9]+$' -- $API
+    set -l API 4001
+end
+
+printf "Stopping services on ports: web=%s, api=%s\n" $WEB $API
+
+kill_port $API
+kill_port $WEB
+
+printf "Done. Verified ports requested to be freed.\n"
