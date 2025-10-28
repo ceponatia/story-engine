@@ -20,6 +20,8 @@
     "lint:code": "turbo run lint",
     "lint:md": "markdownlint \"**/*.md\" --ignore node_modules",
     "test": "turbo run test",
+    "test:web": "vitest -c apps/web/vitest.config.ts",
+    "test:web:run": "vitest run -c apps/web/vitest.config.ts",
     "clean": "turbo run clean",
     "plop": "plop",
     "fmt": "prettier --write .",
@@ -43,6 +45,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.4",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/svelte": "^5.2.8",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
@@ -56,12 +60,15 @@
     "eslint-plugin-svelte": "^3.12.5",
     "eslint-plugin-unused-imports": "^4.3.0",
     "husky": "^9.1.7",
+    "jsdom": "^27.0.1",
     "lint-staged": "^16.2.6",
     "plop": "^4.0.4",
     "prettier": "^3.6.2",
     "prettier-plugin-svelte": "^3.4.0",
+    "svelte": "^5.41.4",
     "svelte-eslint-parser": "^1.4.0",
     "turbo": "^2.5.8",
+    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^2.1.9"
   },
   "packageManager": "pnpm@10.19.0+sha512.c9fc7236e92adf5c8af42fd5bf1612df99c2ceb62f27047032f4720b33f8eacdde311865e91c411f2774f618d82f320808ecb51718bfa82c060c4ba7c76a32b8"
