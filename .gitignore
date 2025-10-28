@@ -1,5 +1,15 @@
 #Ignore vscode AI rules
-.github/instructions/codacy.instructions.md
+.github/instructions/
 .github/copilot-instructions.md
-.github/chatmodes/*
-.github/prompts/*
+.github/chatmodes/
+.github/prompts/
+
+#Ignore all build output
+build/
+dist/
+.playwright-mcp/
+
+#Ignore installed dependencies & configs
+node_modules/
+.turbo/
+.vscode/
