@@ -9,6 +9,7 @@ node_modules/
 .pnpm-store/
 .turbo/
 .eslintcache
+.playwright-mcp/
 
 # ── Editor
 .vscode/
