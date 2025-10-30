@@ -82,38 +82,51 @@ end
 kill_port $WEB
 kill_port $API
 
-# Start backend API
 if not has_cmd pnpm
     echo "Error: pnpm not found in PATH. Please install pnpm and try again."
     exit 1
 end
 
-set -l BACK_CMD pnpm --filter @story-engine/api dev
-set -lx API_PORT $API
+# Start backend API if present (apps/api)
+set -l BACK_PID ""
+if test -f apps/api/package.json
+    set -lx API_PORT $API
+    set -l BACK_CMD pnpm -C apps/api dev
+    echo "Starting backend API on :$API …"
+    $BACK_CMD &
+    set BACK_PID $last_pid
 
-echo "Starting backend API on :$API …"
-# run in background
-$BACK_CMD &
-set -l BACK_PID $last_pid
-
-# Wait for health
-if wait_for_http "http://localhost:$API/api/healthz" 80
-    echo "Backend healthy at http://localhost:$API"
+    # Wait for health
+    if wait_for_http "http://localhost:$API/api/healthz" 80
+        echo "Backend healthy at http://localhost:$API"
+    else
+        echo "Warning: backend did not become healthy on :$API"
+    end
 else
-    echo "Warning: backend did not become healthy on :$API"
+    echo "Skipping backend: apps/api not found."
 end
 
-# Start frontend web only if package still exists
+# Start frontend web only if package exists
 if test -f apps/web/package.json
-    set -l WEB_CMD pnpm --filter @story-engine/web dev
+    set -l WEB_CMD pnpm -C apps/web dev --port $WEB
     echo "Starting frontend on :$WEB …"
     $WEB_CMD &
     set -l WEB_PID $last_pid
     set -l WEB_LINE (printf "  Web  (pid %s) -> http://localhost:%s\n" $WEB_PID $WEB)
 else
-    echo "Skipping frontend: apps/web has been removed/disabled."
+    echo "Skipping frontend: apps/web/package.json not found."
     set -l WEB_LINE "  Web  (skipped)\n"
 end
 
 # Summary
-printf "\n---\nStarted processes:\n  API  (pid %s) -> http://localhost:%s\n%s\nUse 'kill %s' to stop API%s\n" $BACK_PID $API $WEB_LINE $BACK_PID (test -n "$WEB_PID"; and printf " and %s" $WEB_PID)
+set -l API_LINE "  API  (skipped)\n"
+if test -n "$BACK_PID"
+    set API_LINE (printf "  API  (pid %s) -> http://localhost:%s\n" $BACK_PID $API)
+end
+
+printf "\n---\nStarted processes:\n%s%s\n" $API_LINE $WEB_LINE
+if test -n "$BACK_PID"; or test -n "$WEB_PID"
+    printf "Use 'kill%s%s' to stop running processes.\n" \
+        (test -n "$BACK_PID"; and printf " %s" $BACK_PID) \
+        (test -n "$WEB_PID"; and printf " %s" $WEB_PID)
+end
