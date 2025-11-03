@@ -1,4 +1,7 @@
 // Memory interfaces (placeholder)
+// NOTE: Retrieved and MemorySnippet (in packages/types) are intentionally duplicated.
+// These packages are minimal source-only packages without proper workspace setup.
+// To consolidate, convert packages/types to a proper npm package with package.json.
 export interface MemoryChunk {
   id: string;
   sessionId: string;

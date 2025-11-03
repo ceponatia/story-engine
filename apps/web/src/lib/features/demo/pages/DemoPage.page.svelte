@@ -1,1 +1,0 @@
-<!-- Placeholder: DemoPage page component -->

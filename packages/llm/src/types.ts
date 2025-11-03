@@ -1,6 +1,7 @@
 // Public, provider-agnostic types for the LLM package
-// NOTE: When the shared types package is fully published, switch to:
-// import type { Session, Turn } from '@story-engine/types'
+// NOTE: Session and Turn are intentionally duplicated here and in @story-engine/types.
+// These packages are minimal source-only packages without proper workspace setup.
+// To consolidate, convert packages/types to a proper npm package with package.json.
 export interface Session {
   id: string;
   title: string;

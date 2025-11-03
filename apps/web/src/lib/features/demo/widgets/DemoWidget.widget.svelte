@@ -1,1 +1,0 @@
-<!-- Placeholder: DemoWidget widget component -->
