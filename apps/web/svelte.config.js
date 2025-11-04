@@ -6,10 +6,6 @@ const config = {
   preprocess: vitePreprocess(),
   kit: {
     adapter: adapter(),
-    files: {
-      routes: 'routes',
-      lib: 'src/lib',
-    },
   },
 };
 

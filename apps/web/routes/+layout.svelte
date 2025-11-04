@@ -1,5 +1,1 @@
-<script>
-  // Minimal root layout to render child pages
-</script>
-
-<slot />
+<!-- moved to src/routes; obsolete placeholder -->
