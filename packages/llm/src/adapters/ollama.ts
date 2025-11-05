@@ -1,11 +1,11 @@
 import type {
+  AbortSignalLike,
   ChatMessage,
   CompletionDelta,
   CompletionFinal,
   CompletionOptions,
   ProviderAdapter,
   ProviderCapabilities,
-  AbortSignalLike,
 } from '../types';
 
 /**

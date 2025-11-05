@@ -1,7 +1,7 @@
 /* eslint-env node */
 /* eslint-disable no-console */
 /* global console */
-import { LLMClient, OllamaAdapter, defaultPromptHooks } from '../index';
+import { defaultPromptHooks, LLMClient, OllamaAdapter } from '../index';
 
 const baseUrl = process.env.OLLAMA_BASE_URL ?? 'http://localhost:11434';
 const model = process.env.OLLAMA_MODEL ?? 'mistral:instruct';

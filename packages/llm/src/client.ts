@@ -1,8 +1,8 @@
 import type {
   ChatMessage,
+  CompleteChatParams,
   CompletionDelta,
   CompletionFinal,
-  CompleteChatParams,
   LLMClientInit,
 } from './types';
 

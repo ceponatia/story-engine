@@ -1,4 +1,4 @@
-import type { ChatMessage, PromptAssembleInput, PromptHooks, CompletionOptions } from '../types';
+import type { ChatMessage, CompletionOptions, PromptAssembleInput, PromptHooks } from '../types';
 
 export const defaultPromptHooks: PromptHooks = {
   assemble(input: PromptAssembleInput): ChatMessage[] {
