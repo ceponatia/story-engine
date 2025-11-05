@@ -28,7 +28,7 @@ jobs:
         run: pnpm install --frozen-lockfile=false
 
       - name: Lint
-        run: pnpm -w lint
+        run: pnpm -w lint:code
 
       - name: Typecheck
         run: pnpm -w typecheck
