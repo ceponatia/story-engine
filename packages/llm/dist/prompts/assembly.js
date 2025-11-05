@@ -13,7 +13,10 @@ export const defaultPromptHooks = {
     },
     sanitize(messages, _opts) {
         // Simple sanitize: trim, collapse whitespace
-        return messages.map((m) => ({ ...m, content: m.content.replace(/\s+/g, ' ').trim() }));
+        return messages.map((m) => ({
+            ...m,
+            content: m.content.replace(/\s+/g, ' ').trim(),
+        }));
     },
 };
 //# sourceMappingURL=assembly.js.map

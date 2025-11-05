@@ -21,7 +21,8 @@ export class OllamaAdapter {
         if (signal && typeof signal?.addEventListener === 'function') {
             signal.addEventListener('abort', () => controller.abort());
         }
-        const URLCtor = (g.URL ?? ((path, base) => `${base.replace(/\/$/, '')}${path}`));
+        const URLCtor = (g.URL ??
+            ((path, base) => `${base.replace(/\/$/, '')}${path}`));
         const url = URLCtor('/api/chat', this.baseUrl).toString?.() ?? URLCtor('/api/chat', this.baseUrl);
         const body = {
             model: opts.model,
@@ -48,9 +49,14 @@ export class OllamaAdapter {
         let finishReason = 'stop';
         async function* stream() {
             const Decoder = g.TextDecoder;
-            const decoder = new (Decoder ?? class {
-                decode(u) { return Array.from(u).map((c) => String.fromCharCode(c)).join(''); }
-            })();
+            const decoder = new (Decoder ??
+                class {
+                    decode(u) {
+                        return Array.from(u)
+                            .map((c) => String.fromCharCode(c))
+                            .join('');
+                    }
+                })();
             let buffer = '';
             while (true) {
                 const { done, value } = await reader.read();
@@ -90,7 +96,9 @@ export class OllamaAdapter {
                         finishReason = 'stop';
                     }
                 }
-                catch { /* noop */ }
+                catch {
+                    /* noop */
+                }
             }
             return;
         }

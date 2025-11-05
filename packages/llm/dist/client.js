@@ -16,20 +16,33 @@ export class LLMClient {
         // Assemble + sanitize messages via hooks
         let messages = params.messages;
         if (this.hooks?.assemble) {
-            messages = this.hooks.assemble({ userMessages: messages, tools: params.options.tools });
+            messages = this.hooks.assemble({
+                userMessages: messages,
+                tools: params.options.tools,
+            });
         }
         if (this.hooks?.sanitize) {
             messages = this.hooks.sanitize(messages, params.options);
         }
-        this.telemetry?.onPreflight?.({ requestId, sessionId: params.sessionId, model });
+        this.telemetry?.onPreflight?.({
+            requestId,
+            sessionId: params.sessionId,
+            model,
+        });
         const started = Date.now();
-        return this.adapter
-            .chat(messages, params.options, params.signal)
-            .then(({ stream, final }) => {
-            const wrappedFinal = final.then((f) => {
-                this.telemetry?.onCompletion?.({ requestId, model, latencyMs: Date.now() - started, usage: f.usage, finishReason: f.finishReason });
+        return this.adapter.chat(messages, params.options, params.signal).then(({ stream, final }) => {
+            const wrappedFinal = final
+                .then((f) => {
+                this.telemetry?.onCompletion?.({
+                    requestId,
+                    model,
+                    latencyMs: Date.now() - started,
+                    usage: f.usage,
+                    finishReason: f.finishReason,
+                });
                 return f;
-            }).catch((err) => {
+            })
+                .catch((err) => {
                 this.telemetry?.onError?.({ requestId, model, error: err });
                 throw err;
             });
@@ -42,7 +55,7 @@ export class LLMClient {
     }
     tools() {
         // Placeholder: could expose registered tool schemas
-        return { list: () => this.hooks ? [] : [] };
+        return { list: () => (this.hooks ? [] : []) };
     }
 }
 function makeId() {
